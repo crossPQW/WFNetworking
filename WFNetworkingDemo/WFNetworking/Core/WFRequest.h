@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "WFMacro.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface WFRequest : NSObject
 
 @property (nonatomic, assign) NSUInteger identifier;
@@ -32,6 +34,8 @@
 @property (nonatomic, copy, readonly, nullable) WFProgressBlock progressBlock;
 
 + (instancetype _Nonnull) request;
-+ (instancetype _Nonnull) requestWithApi:(NSString * )api parameters:( NSDictionary <NSString *, id>* _Nullable  )parameters;
++ (instancetype _Nonnull) requestWithApi:(NSString * )api parameters:( NSDictionary <NSString *, id>* _Nullable)parameters;
 - (void)clearCallBack;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -36,6 +36,23 @@ NS_ASSUME_NONNULL_BEGIN
                   failure:(nullable WFFailureBlock)failureBlock
                    finish:(nullable WFFinishBlock)finishBlock;
 
++ (NSUInteger)sendRequest:(WFRequest *)request
+                  success:(nullable WFSuccessBlock)successBlock;
++ (NSUInteger)sendRequest:(WFRequest *)request
+                  failure:(nullable WFFailureBlock)failureBlock;
++ (NSUInteger)sendRequest:(WFRequest *)request
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock;
++ (NSUInteger)sendRequest:(WFRequest *)request
+                 Progress:(nullable WFProgressBlock)progressBlock
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock;
++ (NSUInteger)sendRequest:(WFRequest *)request
+                 Progress:(nullable WFProgressBlock)progressBlock
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock
+                   finish:(nullable WFFinishBlock)finishBlock;
+
 #pragma mark - cancel request
 + (void)cancelRquest:(NSUInteger)requestIdentifier;
 + (void)cancelAllRequest;

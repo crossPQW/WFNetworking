@@ -66,6 +66,33 @@
     return [self beginSendRequest:request];
 }
 
++ (NSUInteger)sendRequest:(WFRequest *)request
+                  success:(nullable WFSuccessBlock)successBlock {
+    return [[self defaultManager] sendRequest:request success:successBlock];
+}
++ (NSUInteger)sendRequest:(WFRequest *)request
+                  failure:(nullable WFFailureBlock)failureBlock {
+    return [[self defaultManager] sendRequest:request failure:failureBlock];
+}
++ (NSUInteger)sendRequest:(WFRequest *)request
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock {
+    return [[self defaultManager] sendRequest:request success:successBlock failure:failureBlock];
+}
++ (NSUInteger)sendRequest:(WFRequest *)request
+                 Progress:(nullable WFProgressBlock)progressBlock
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock {
+    return [[self defaultManager] sendRequest:request Progress:progressBlock success:successBlock failure:failureBlock];
+}
++ (NSUInteger)sendRequest:(WFRequest *)request
+                 Progress:(nullable WFProgressBlock)progressBlock
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock
+                   finish:(nullable WFFinishBlock)finishBlock {
+    return [[self defaultManager] sendRequest:request Progress:progressBlock success:successBlock failure:failureBlock finish:finishBlock];
+}
+
 #pragma mark - private method
 - (void)processRequest:(WFRequest *)request
                progress:(WFProgressBlock)progressBlock
