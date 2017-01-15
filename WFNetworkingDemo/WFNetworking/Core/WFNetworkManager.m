@@ -14,6 +14,7 @@
 @property (nonatomic, copy, nullable) NSString *defaultHost;
 @property (nonatomic, strong, nullable) NSMutableDictionary<NSString *, id> *defaultParameters;
 @property (nonatomic, strong, nullable) NSMutableDictionary<NSString *, NSString *> *defaultHeaders;
+
 @end
 @implementation WFNetworkManager
 
@@ -100,6 +101,8 @@
                 failure:(WFFailureBlock)failureBlock
                finished:(WFFinishBlock)finishedBlock {
     
+    
+    
     if (successBlock) {
         [request setValue:successBlock forKey:@"_successBlock"];
     }
@@ -160,10 +163,15 @@
 
 + (void)cancelRquest:(NSUInteger)requestIdentifier {
     [[WFNetWorkAgent shareAgent] cancelRequestByIdentifier:requestIdentifier];
+    
 }
 
 + (void)cancelAllRequest {
     [[WFNetWorkAgent shareAgent] cancelAllRequest];
+}
+
++ (WFRequest * _Nullable )getRequest:(NSUInteger)requestIdentifier {
+    return [[WFNetWorkAgent shareAgent] getRequest:requestIdentifier];
 }
 
 @end

@@ -26,6 +26,7 @@ typedef void(^WFCompletedHandler)(id _Nullable response, NSError *error);
 
 - (void)cancelRequestByIdentifier:(NSUInteger)identifier;
 - (void)cancelAllRequest;
+- ( WFRequest * _Nullable )getRequest:(NSUInteger)identifier;
 @end
 
 NS_ASSUME_NONNULL_END

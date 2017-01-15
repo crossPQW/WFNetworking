@@ -56,6 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - cancel request
 + (void)cancelRquest:(NSUInteger)requestIdentifier;
 + (void)cancelAllRequest;
+
++ (WFRequest * _Nullable )getRequest:(NSUInteger)requestIdentifier;
 @end
 
 NS_ASSUME_NONNULL_END

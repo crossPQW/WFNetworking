@@ -44,6 +44,12 @@
     return self;
 }
 
+- (void)dealloc {
+    if (_sessionManager) {
+        [_sessionManager invalidateSessionCancelingTasks:YES];
+    }
+}
+
 - (NSUInteger)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     return [self dataTaskWithRequest:request complete:handler];
 }
@@ -126,6 +132,19 @@
         [obj cancel];
     }];
     WFUnlock();
+}
+
+- (WFRequest * _Nullable )getRequest:(NSUInteger)identifier {
+    if (identifier == 0) {
+        return nil;
+    }
+    
+    BOOL hasRequest = [[_requestCache allKeys] containsObject:@(identifier)];
+    if (!hasRequest) {
+        return nil;
+    }
+    
+    return _requestCache[@(identifier)];
 }
 
 - (void)cacheRequest:(WFRequest *)request {
