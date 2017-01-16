@@ -23,6 +23,7 @@
 @property (nonatomic, strong) dispatch_queue_t requestCompleteQueue;
 
 @property (nonatomic, strong) NSMutableDictionary <NSNumber *, WFRequest *>*requestCache;
+
 @end
 
 @implementation WFNetWorkAgent
@@ -61,6 +62,14 @@
     
     NSMutableURLRequest *urlRequest = [self.afJSONRequestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
     urlRequest.timeoutInterval = request.timeoutInterval;
+    
+    
+    if (request.cacheOption == kWFHTTPCacheOptionUseCache) {
+        urlRequest.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+    }else if(request.cacheOption == kWFHTTPCacheOptionIgnoringCache){
+        urlRequest.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    }
+    
     if (error && handler) {
         dispatch_async(self.requestCompleteQueue, ^{
             handler(nil, error);
@@ -173,6 +182,8 @@
     if (!_sessionManager) {
         _sessionManager = [AFHTTPSessionManager manager];
         _sessionManager.responseSerializer =self.afJSONResponseSerializer;
+        _sessionManager.securityPolicy.allowInvalidCertificates = YES;
+        _sessionManager.securityPolicy.validatesDomainName = NO;
         _sessionManager.completionQueue = self.requestCompleteQueue;
         _sessionManager.operationQueue.maxConcurrentOperationCount = 10;
     }

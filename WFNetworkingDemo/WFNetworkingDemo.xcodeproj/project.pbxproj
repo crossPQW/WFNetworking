@@ -24,6 +24,8 @@
 		385821D41E264B4800A50E1B /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 385821C81E264B4800A50E1B /* AFURLRequestSerialization.m */; };
 		385821D51E264B4800A50E1B /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 385821CA1E264B4800A50E1B /* AFURLResponseSerialization.m */; };
 		385821D61E264B4800A50E1B /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 385821CC1E264B4800A50E1B /* AFURLSessionManager.m */; };
+		386CE10B1E2CCF570030FFF9 /* WFTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 386CE10A1E2CCF570030FFF9 /* WFTestCase.m */; };
+		386CE10D1E2CCF690030FFF9 /* WFNormalTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 386CE10C1E2CCF690030FFF9 /* WFNormalTestCase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,9 @@
 		385821CB1E264B4800A50E1B /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		385821CC1E264B4800A50E1B /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		385821CD1E264B4800A50E1B /* WFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFNetworking.h; sourceTree = "<group>"; };
+		386CE1091E2CCF570030FFF9 /* WFTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFTestCase.h; sourceTree = "<group>"; };
+		386CE10A1E2CCF570030FFF9 /* WFTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFTestCase.m; sourceTree = "<group>"; };
+		386CE10C1E2CCF690030FFF9 /* WFNormalTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFNormalTestCase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +163,9 @@
 			children = (
 				3858219C1E264B1000A50E1B /* WFNetworkingDemoTests.m */,
 				3858219E1E264B1000A50E1B /* Info.plist */,
+				386CE1091E2CCF570030FFF9 /* WFTestCase.h */,
+				386CE10A1E2CCF570030FFF9 /* WFTestCase.m */,
+				386CE10C1E2CCF690030FFF9 /* WFNormalTestCase.m */,
 			);
 			path = WFNetworkingDemoTests;
 			sourceTree = "<group>";
@@ -378,6 +386,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				386CE10B1E2CCF570030FFF9 /* WFTestCase.m in Sources */,
+				386CE10D1E2CCF690030FFF9 /* WFNormalTestCase.m in Sources */,
 				3858219D1E264B1000A50E1B /* WFNetworkingDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

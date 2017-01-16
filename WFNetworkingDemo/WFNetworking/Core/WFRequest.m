@@ -20,9 +20,6 @@
         //设置默认配置
         self.httpMethod = kWFHTTPMethodGET;
         self.timeoutInterval = 60;
-//        self.host = @"https://httpbin.org/get";
-//        self.parameters = @{@"global_param": @"global param value"};
-//        self.headers = @{@"global_header": @"global header value"};
     }
     return self;
 }

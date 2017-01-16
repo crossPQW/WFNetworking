@@ -34,64 +34,70 @@
     static WFNetworkManager *manager;
     dispatch_once(&onceToken, ^{
         manager = [self manager];
+        NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
+        [NSURLCache setSharedURLCache:cache];
     });
     return manager;
 }
 
-- (NSUInteger)sendRequest:(WFRequest *)request
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock {
-    return [self sendRequest:request Progress:nil success:successBlock failure:nil finish:nil];
+    return [self sendRequest:requestBlock Progress:nil success:successBlock failure:nil finish:nil];
 }
-- (NSUInteger)sendRequest:(WFRequest *)request
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequest:request Progress:nil success:nil failure:failureBlock finish:nil];
+    return [self sendRequest:requestBlock Progress:nil success:nil failure:failureBlock finish:nil];
 }
-- (NSUInteger)sendRequest:(WFRequest *)request
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequest:request Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequest:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-- (NSUInteger)sendRequest:(WFRequest *)request
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequest:request Progress:progressBlock success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequest:requestBlock Progress:progressBlock success:successBlock failure:failureBlock finish:nil];
 }
 
-- (NSUInteger)sendRequest:(WFRequest *)request
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(WFProgressBlock)progressBlock
                   success:(WFSuccessBlock)successBlock
                   failure:(WFFailureBlock)failureBlock
                    finish:(WFFinishBlock)finishBlock {
+    WFRequest *request = [[WFRequest alloc] init];
+    if (requestBlock) {
+        requestBlock(request);
+    }
     [self processRequest:request progress:progressBlock success:successBlock failure:failureBlock finished:finishBlock];
     return [self beginSendRequest:request];
 }
 
-+ (NSUInteger)sendRequest:(WFRequest *)request
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock {
-    return [[self defaultManager] sendRequest:request success:successBlock];
+    return [[self defaultManager] sendRequest:requestBlock success:successBlock];
 }
-+ (NSUInteger)sendRequest:(WFRequest *)request
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequest:request failure:failureBlock];
+    return [[self defaultManager] sendRequest:requestBlock failure:failureBlock];
 }
-+ (NSUInteger)sendRequest:(WFRequest *)request
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequest:request success:successBlock failure:failureBlock];
+    return [[self defaultManager] sendRequest:requestBlock success:successBlock failure:failureBlock];
 }
-+ (NSUInteger)sendRequest:(WFRequest *)request
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequest:request Progress:progressBlock success:successBlock failure:failureBlock];
+    return [[self defaultManager] sendRequest:requestBlock Progress:progressBlock success:successBlock failure:failureBlock];
 }
-+ (NSUInteger)sendRequest:(WFRequest *)request
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock
                    finish:(nullable WFFinishBlock)finishBlock {
-    return [[self defaultManager] sendRequest:request Progress:progressBlock success:successBlock failure:failureBlock finish:finishBlock];
+    return [[self defaultManager] sendRequest:requestBlock Progress:progressBlock success:successBlock failure:failureBlock finish:finishBlock];
 }
 
 #pragma mark - private method
@@ -155,7 +161,8 @@
     }
 }
 
-- (void)handleSuccess:(id)responseObject withRequest:(WFRequest *)request {
+- (void)handleSuccess:(id)responseObject withRequest:(WFRequest *)request
+{
     if (request.successBlock) {
         request.successBlock(responseObject);
     }
@@ -168,6 +175,11 @@
 
 + (void)cancelAllRequest {
     [[WFNetWorkAgent shareAgent] cancelAllRequest];
+}
+
++ (void)clearAllCache {
+    NSURLCache *cache = [NSURLCache sharedURLCache];
+    [cache removeAllCachedResponses];
 }
 
 + (WFRequest * _Nullable )getRequest:(NSUInteger)requestIdentifier {
