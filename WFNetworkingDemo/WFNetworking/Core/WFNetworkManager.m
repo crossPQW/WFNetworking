@@ -10,12 +10,6 @@
 #import "WFRequest.h"
 #import "WFNetWorkAgent.h"
 
-@interface WFNetworkManager()
-@property (nonatomic, copy, nullable) NSString *defaultHost;
-@property (nonatomic, strong, nullable) NSMutableDictionary<NSString *, id> *defaultParameters;
-@property (nonatomic, strong, nullable) NSMutableDictionary<NSString *, NSString *> *defaultHeaders;
-
-@end
 @implementation WFNetworkManager
 
 + (instancetype)manager {
@@ -54,6 +48,15 @@
     return [self sendRequest:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
 - (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock
+                   finish:(WFFinishBlock)finishBlock {
+    return [self sendRequest:requestBlock Progress:nil success:successBlock failure:failureBlock finish:finishBlock];
+}
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock finish:(WFFinishBlock)finishBlock {
+    return [self sendRequest:requestBlock Progress:nil success:nil failure:nil finish:finishBlock];
+}
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
@@ -73,6 +76,7 @@
     return [self beginSendRequest:request];
 }
 
+
 + (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock {
     return [[self defaultManager] sendRequest:requestBlock success:successBlock];
@@ -85,6 +89,15 @@
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
     return [[self defaultManager] sendRequest:requestBlock success:successBlock failure:failureBlock];
+}
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock
+                   finish:(WFFinishBlock)finishBlock {
+    return [[self defaultManager] sendRequest:requestBlock Progress:nil success:successBlock failure:failureBlock finish:finishBlock];
+}
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock finish:(WFFinishBlock)finishBlock {
+    return [[self defaultManager] sendRequest:requestBlock Progress:nil success:nil failure:nil finish:finishBlock];
 }
 + (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
@@ -163,9 +176,28 @@
 
 - (void)handleSuccess:(id)responseObject withRequest:(WFRequest *)request
 {
+    if (self.callbackQueue) {
+        __weak typeof(self)weakSelf = self;
+        dispatch_async(self.callbackQueue, ^{
+            __strong typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf performSuccessCallBackWithResponseobject:responseObject Request:request];
+        });
+    }else{
+        [self performSuccessCallBackWithResponseobject:responseObject Request:request];
+    }
+    
+}
+
+- (void)performSuccessCallBackWithResponseobject:(id)responseObject Request:(WFRequest *)request {
     if (request.successBlock) {
         request.successBlock(responseObject);
     }
+    if (request.finishBlock) {
+        request.finishBlock(responseObject,nil);
+    }
+    
+    [request clearCallBack];
+    
 }
 
 + (void)cancelRquest:(NSUInteger)requestIdentifier {

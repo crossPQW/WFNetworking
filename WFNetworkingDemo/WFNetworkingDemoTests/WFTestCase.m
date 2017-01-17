@@ -10,4 +10,19 @@
 
 @implementation WFTestCase
 
+- (void)setUp {
+    self.networkTimeout = 60;
+}
+
+- (void)tearDown {
+    [super tearDown];
+}
+
+- (void)waitForExpectationsWithCommonTimeout {
+    [self waitForExpectationsWithCommonTimeoutUsingHandler:nil];
+}
+
+- (void)waitForExpectationsWithCommonTimeoutUsingHandler:(XCWaitCompletionHandler)handler {
+    [self waitForExpectationsWithTimeout:self.networkTimeout handler:handler];
+}
 @end

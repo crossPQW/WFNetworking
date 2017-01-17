@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, WFHTTPCacheOption) {
 typedef void (^WFRequestConfigBlock)(WFRequest *request);
 typedef void (^WFProgressBlock)(NSProgress  *progress);
 typedef void (^WFSuccessBlock)(id _Nullable response);
-typedef void (^WFFailureBlock)(NSError *_Nullable progress);
+typedef void (^WFFailureBlock)(NSError *_Nullable error);
 typedef void (^WFFinishBlock)(id _Nullable response, NSError *_Nullable error);
 NS_ASSUME_NONNULL_END
 #endif /* WFMacro_h */

@@ -27,6 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
 - (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock
+                   finish:(WFFinishBlock)finishBlock;
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
+                   finish:(WFFinishBlock)finishBlock;
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
@@ -43,6 +49,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
+                  success:(nullable WFSuccessBlock)successBlock
+                  failure:(nullable WFFailureBlock)failureBlock
+                   finish:(WFFinishBlock)finishBlock;
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
+                   finish:(WFFinishBlock)finishBlock;
 + (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock

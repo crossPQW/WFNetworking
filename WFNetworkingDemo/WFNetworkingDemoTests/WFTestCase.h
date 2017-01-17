@@ -10,4 +10,8 @@
 
 @interface WFTestCase : XCTestCase
 
+@property (nonatomic, assign) NSTimeInterval networkTimeout;
+
+- (void)waitForExpectationsWithCommonTimeout;
+- (void)waitForExpectationsWithCommonTimeoutUsingHandler:(XCWaitCompletionHandler)handler;
 @end

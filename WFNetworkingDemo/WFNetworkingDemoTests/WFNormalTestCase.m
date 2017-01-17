@@ -28,6 +28,45 @@
 
 
 - (void)testGet {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"GET request"];
+    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+        request.host = @"https://httpbin.org/";
+        request.api = @"get";
+    } finish:^(id  _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(response);
+        XCTAssertTrue([response isKindOfClass:[NSDictionary class]]);
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithCommonTimeout];
+}
+
+- (void)testGetWithParameters {
+    XCTestExpectation *ex = [self expectationWithDescription:@"Get request with perameter"];
+    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+        request.host = @"https://httpbin.org/";
+        request.api = @"get";
+        request.parameters = @{@"key": @"huangshaohua"};
+    } success:^(id  _Nullable response) {
+        XCTAssertNotNil(response);
+        XCTAssertTrue([response isKindOfClass:[NSDictionary class]]);
+        NSString *value = response[@"args"][@"key"];
+        XCTAssertTrue([value isEqualToString:@"huangshaohua"]);
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
+    } finish:^(id  _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(response);
+        XCTAssertTrue([response isKindOfClass:[NSDictionary class]]);
+        NSString *value = response[@"args"][@"key"];
+        XCTAssertTrue([value isEqualToString:@"huangshaohua"]);
+        XCTAssertNil(error);
+        [ex fulfill];
+    }];
+    
+    [self waitForExpectationsWithCommonTimeout];
+}
+
+- (void)testPost {
     
 }
 
