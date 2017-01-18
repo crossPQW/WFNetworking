@@ -17,16 +17,14 @@ typedef void(^WFCompletedHandler)(id _Nullable response, NSError *error);
 
 @interface WFNetWorkAgent : NSObject
 
-@property (nonatomic, strong, readonly) AFHTTPSessionManager *sessionManager;
+
 
 + (instancetype)shareAgent;
 
 
-- (NSUInteger)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler;
+- (WFRequest *)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler;
 
-- (void)cancelRequestByIdentifier:(NSUInteger)identifier;
-- (void)cancelAllRequest;
-- ( WFRequest * _Nullable )getRequest:(NSUInteger)identifier;
+- (void)cancelRequest:(WFRequest*)request;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -23,7 +23,6 @@
 @property (nonatomic, strong) dispatch_queue_t requestCompleteQueue;
 
 @property (nonatomic, strong) NSMutableDictionary <NSNumber *, WFRequest *>*requestCache;
-
 @end
 
 @implementation WFNetWorkAgent
@@ -51,16 +50,16 @@
     }
 }
 
-- (NSUInteger)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+- (WFRequest *)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     return [self dataTaskWithRequest:request complete:handler];
 }
 
-- (NSUInteger)dataTaskWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+- (WFRequest *)dataTaskWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     
     NSError *error;
     NSString *httpMethod = [self getHTTPMethodWithRequest:request];
     
-    NSMutableURLRequest *urlRequest = [self.afJSONRequestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
+    NSMutableURLRequest *urlRequest = [self.sessionManager.requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
     urlRequest.timeoutInterval = request.timeoutInterval;
     
     
@@ -103,12 +102,10 @@
         }
         
     }];
-    
-    request.identifier = task.taskIdentifier;
-    [self cacheRequest:request];
     [task resume];
-
-    return request.identifier;
+    request.task = task;
+    [self cacheRequest:request];
+    return request;
 }
 
 
@@ -118,53 +115,24 @@
     return methodString;
 }
 
-- (void)cancelRequestByIdentifier:(NSUInteger)identifier {
-    if (identifier == 0) {return;}
-    
-    WFLock();
-    WFRequest *request = _requestCache[@(identifier)];
-    
-    [self.sessionManager.tasks enumerateObjectsUsingBlock:^(NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.taskIdentifier == identifier) {
-            [obj cancel];
-            *stop = YES;
-        }
-    }];
+- (void)cancelRequest:(WFRequest *)request {
+    NSLog(@"cancleed id = %ld",request.task.taskIdentifier);
+    [request.task cancel];
     [self removeRequestFromCache:request];
-    WFUnlock();
+    [request clearCallBack];
 }
 
-- (void)cancelAllRequest {
-    WFLock();
-    [_requestCache removeAllObjects];
-    [self.sessionManager.tasks enumerateObjectsUsingBlock:^(NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj cancel];
-    }];
-    WFUnlock();
-}
 
-- (WFRequest * _Nullable )getRequest:(NSUInteger)identifier {
-    if (identifier == 0) {
-        return nil;
-    }
-    
-    BOOL hasRequest = [[_requestCache allKeys] containsObject:@(identifier)];
-    if (!hasRequest) {
-        return nil;
-    }
-    
-    return _requestCache[@(identifier)];
-}
 
 - (void)cacheRequest:(WFRequest *)request {
     WFLock();
-    _requestCache[@(request.identifier)] = request;
+    _requestCache[@(request.task.taskIdentifier)] = request;
     WFUnlock();
 }
 
 - (void)removeRequestFromCache:(WFRequest *)request {
     WFLock();
-    [_requestCache removeObjectForKey: @(request.identifier)];
+    [_requestCache removeObjectForKey: @(request.task.taskIdentifier)];
     WFUnlock();
 }
 
@@ -181,11 +149,12 @@
 - (AFHTTPSessionManager *)sessionManager {
     if (!_sessionManager) {
         _sessionManager = [AFHTTPSessionManager manager];
-        _sessionManager.responseSerializer =self.afJSONResponseSerializer;
-        _sessionManager.securityPolicy.allowInvalidCertificates = YES;
-        _sessionManager.securityPolicy.validatesDomainName = NO;
+//        _sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//        _sessionManager.securityPolicy.allowInvalidCertificates = YES;
+//        _sessionManager.securityPolicy.validatesDomainName = NO;
         _sessionManager.completionQueue = self.requestCompleteQueue;
-        _sessionManager.operationQueue.maxConcurrentOperationCount = 10;
+        _sessionManager.operationQueue.maxConcurrentOperationCount = 5;
     }
     return _sessionManager;
 }

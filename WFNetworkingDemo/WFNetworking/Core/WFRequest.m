@@ -10,25 +10,19 @@
 
 @implementation WFRequest
 
-+ (instancetype) request {
-    return [[[self class] alloc] init];
-}
-
 - (instancetype)init {
     if (self = [super init]) {
-        
         //设置默认配置
         self.httpMethod = kWFHTTPMethodGET;
         self.timeoutInterval = 60;
+        self.cacheOption = kWFHTTPCacheOptionUseCache;
     }
     return self;
 }
 
-+ (instancetype)requestWithApi:(NSString *)api parameters:(NSDictionary<NSString *,id> *)parameters {
-    WFRequest *request = [self request];
-    request.api = api;
-    request.parameters = parameters;
-    return request;
+- (id)copyWithZone:(NSZone *)zone {
+    WFRequest *copy = [[[self class] alloc] init];
+    return copy;
 }
 
 - (void)clearCallBack {

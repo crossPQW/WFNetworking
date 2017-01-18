@@ -18,6 +18,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+//    WFRequest *request = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+//        request.url = @"https://kangzubin.cn/test/timeout.php";
+//        request.httpMethod = kWFHTTPMethodGET;
+//    } success:^(id  _Nullable response) {
+//        
+//    } failure:^(NSError * _Nullable error) {
+//        NSLog(@"error %ld",error.code);
+//    } finish:^(id  _Nullable response, NSError * _Nullable error) {
+//        
+//    }];
+//    
+//    sleep(3);
+//    [WFNetworkManager cancelRquest:request];
 }
 
 
