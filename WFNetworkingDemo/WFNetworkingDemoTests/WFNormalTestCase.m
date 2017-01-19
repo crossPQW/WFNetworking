@@ -177,19 +177,21 @@
     XCTestExpectation *ex = [self expectationWithDescription:@"test download request"];
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.requestType = kWFRequestTypeDownload;
-        request.url = @"http://a0.ifengimg.com/autoimg/serial/500/2621.jpg";
-        request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test.png"];
+        request.url = @"http://i9.download.fd.pchome.net/g1/M00/09/0C/oYYBAFOzfi6IFsMOABKOGmYqrKQAABr-AKfW0YAEo4y231.jpg";
+        request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test1.png"];
     } Progress:^(NSProgress * _Nonnull progress) {
-        NSLog(@"progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
+        NSLog(@"*********progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
         if (progress.fractionCompleted == 1) {
             
         }
     } success:^(id  _Nullable response) {
-        NSLog(@"response = %@",response);
+        XCTAssertNotNil(response);
+        XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:((NSURL *)response).path]);
     } failure:^(NSError * _Nullable error) {
-        
+        XCTAssertNil(error);
     } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        NSLog(@"finish block == %@",response);
+        XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:((NSURL *)response).path]);
+        XCTAssertNil(error);
         [ex fulfill];
     }];
     
