@@ -15,6 +15,12 @@
 NS_ASSUME_NONNULL_BEGIN
 @class WFRequest;
 
+typedef NS_ENUM(NSInteger, WFRequestType) {
+    kWFRequestTypeNormal = 0,
+    kWFRequestTypeDownload,
+    kWFRequestTypeUpload
+};
+
 typedef NS_ENUM(NSInteger, WFHTTPMethod) {
     kWFHTTPMethodGET = 0,
     kWFHTTPMethodPOST,

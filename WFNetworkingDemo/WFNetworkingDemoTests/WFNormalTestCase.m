@@ -173,4 +173,26 @@
     [self waitForExpectationsWithCommonTimeout];
 }
 
+- (void)testDownloadRequest {
+    XCTestExpectation *ex = [self expectationWithDescription:@"test download request"];
+    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+        request.requestType = kWFRequestTypeDownload;
+        request.url = @"http://a0.ifengimg.com/autoimg/serial/500/2621.jpg";
+        request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test.png"];
+    } Progress:^(NSProgress * _Nonnull progress) {
+        NSLog(@"progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
+        if (progress.fractionCompleted == 1) {
+            
+        }
+    } success:^(id  _Nullable response) {
+        NSLog(@"response = %@",response);
+    } failure:^(NSError * _Nullable error) {
+        
+    } finish:^(id  _Nullable response, NSError * _Nullable error) {
+        NSLog(@"finish block == %@",response);
+        [ex fulfill];
+    }];
+    
+    [self waitForExpectationsWithCommonTimeout];
+}
 @end

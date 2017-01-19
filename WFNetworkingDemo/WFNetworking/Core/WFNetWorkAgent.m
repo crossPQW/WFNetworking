@@ -64,7 +64,16 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
 }
 
 - (NSUInteger)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
-    return [self dataTaskWithRequest:request complete:handler];
+    if (request.requestType == kWFRequestTypeNormal) {
+        return [self dataTaskWithRequest:request complete:handler];
+    }else if (request.requestType == kWFRequestTypeDownload) {
+        return [self downloadWithRequest:request complete:handler];
+    }else if (request.requestType == kWFRequestTypeUpload){
+        return [self uploadWithRequest:request complete:handler];
+    }else{
+        NSAssert(NO, @"request type should not be exist");
+        return 0;
+    }
 }
 
 - (NSUInteger)dataTaskWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
@@ -76,11 +85,11 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
     NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
     urlRequest.timeoutInterval = request.timeoutInterval;
     
-//    if (request.cacheOption == kWFHTTPCacheOptionUseCache) {
-//        urlRequest.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-//    }else if(request.cacheOption == kWFHTTPCacheOptionIgnoringCache){
-//        urlRequest.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-//    }
+    if (request.cachePolicy == kWFHTTPCacheOptionUseCache) {
+        urlRequest.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+    }else if(request.cachePolicy == kWFHTTPCacheOptionIgnoringCache){
+        urlRequest.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    }
     
     if (error && handler) {
         dispatch_async(self.requestCompleteQueue, ^{
@@ -89,12 +98,7 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
         return 0;
     }
     
-    //添加header
-    if (request.headers.count > 0) {
-        [request.headers enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-            [urlRequest setValue:obj forHTTPHeaderField:key];
-        }];
-    }
+    [self addHeaderForUrlRequest:urlRequest withRequest:request];
     
     NSURLSessionDataTask *task = [self.sessionManager dataTaskWithRequest:urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         
@@ -121,6 +125,54 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
     return request.identifier;
 }
 
+- (NSUInteger)downloadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+    NSURLRequestCachePolicy cachePolicy;
+    if (request.cachePolicy == kWFHTTPCacheOptionUseCache) {
+        cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+    }else if(request.cachePolicy == kWFHTTPCacheOptionIgnoringCache){
+        cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    }
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:request.url] cachePolicy:cachePolicy timeoutInterval:request.timeoutInterval];
+    [self addHeaderForUrlRequest:urlRequest withRequest:request];
+    
+    BOOL isDirectory;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:request.downloadCachePath isDirectory:&isDirectory]) {
+        isDirectory = NO;
+    }
+    
+    NSURL *downloadCachePathURL;
+    if (isDirectory) {
+        NSString *fileName = [urlRequest.URL lastPathComponent];
+        downloadCachePathURL = [NSURL fileURLWithPath:[NSString pathWithComponents:@[request.downloadCachePath, fileName]] isDirectory:NO];
+    }else{
+        downloadCachePathURL = [NSURL fileURLWithPath:request.downloadCachePath isDirectory:NO];
+    }
+    
+    NSURLSessionDownloadTask *downloadTask = [self.sessionManager downloadTaskWithRequest:urlRequest progress:request.progressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        return downloadCachePathURL;
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        if (handler) {
+            handler(filePath, error);
+        }
+    }];
+    [downloadTask bindingRequest:request];
+    request.identifier = downloadTask.taskIdentifier;
+    [downloadTask resume];
+    return request.identifier;
+}
+
+- (NSUInteger)uploadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+    return 0;
+}
+
+- (void)addHeaderForUrlRequest:(NSMutableURLRequest *)urlRequest withRequest:(WFRequest *)request {
+    //添加header
+    if (request.headers.count > 0) {
+        [request.headers enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+            [urlRequest setValue:obj forHTTPHeaderField:key];
+        }];
+    }
+}
 
 - (NSString *)getHTTPMethodWithRequest:(WFRequest *)request {
     NSArray * httpMethodArray = @[@"GET", @"POST", @"HEAD", @"PUT", @"DELETE", @"PATCH"];

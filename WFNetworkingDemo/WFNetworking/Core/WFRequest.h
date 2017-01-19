@@ -23,11 +23,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSDictionary <NSString *, NSString *> *headers;
 @property (nonatomic, strong, nullable) NSDictionary *userInfo;
 
+@property (nonatomic, assign) WFRequestType requestType;
 @property (nonatomic, assign) WFHTTPMethod httpMethod;
+
+@property (nonatomic, copy, nullable) NSString *downloadCachePath;
 
 @property (nonatomic, assign) NSTimeInterval timeoutInterval;
 @property (nonatomic, assign) NSInteger retryTime;
-@property (nonatomic, assign) WFHTTPCacheOption cacheOption;
+@property (nonatomic, assign) WFHTTPCacheOption cachePolicy;
 
 @property (nonatomic, copy, readonly, nullable) WFSuccessBlock successBlock;
 @property (nonatomic, copy, readonly, nullable) WFFailureBlock failureBlock;
