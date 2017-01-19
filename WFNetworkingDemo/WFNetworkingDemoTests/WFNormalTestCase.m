@@ -154,7 +154,7 @@
 
 - (void)testCancelRequest {
     XCTestExpectation *ex = [self expectationWithDescription:@"test cancel request"];
-    WFRequest *request = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    NSUInteger ID = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.url = @"https://kangzubin.cn/test/timeout.php";
         request.httpMethod = kWFHTTPMethodGET;
     } success:^(id  _Nullable response) {
@@ -167,9 +167,9 @@
         [ex fulfill];
     }];
     
-    NSLog(@"id = %ld",request.task.taskIdentifier);
     sleep(5);
-    [WFNetworkManager cancelRquest:request];
+    [WFNetworkManager cancelRquest:ID];
+    
     [self waitForExpectationsWithCommonTimeout];
 }
 

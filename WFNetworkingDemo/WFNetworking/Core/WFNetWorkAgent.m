@@ -10,6 +10,21 @@
 #import "WFNetWorkAgent.h"
 #import "WFMacro.h"
 #import <pthread/pthread.h>
+#import <objc/runtime.h>
+
+@implementation NSObject (BindingRequestForNSURLSessionTask)
+
+static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
+
+- (void)bindingRequest:(WFRequest *)request {
+    objc_setAssociatedObject(self, (__bridge CFStringRef)kWFRequestBindingKey, request, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (WFRequest *)bindedRequest {
+    WFRequest *request = objc_getAssociatedObject(self, (__bridge CFStringRef)kWFRequestBindingKey);
+    return request;
+}
+@end
 
 @interface WFNetWorkAgent(){
     pthread_mutex_t _lock;
@@ -22,7 +37,6 @@
 
 @property (nonatomic, strong) dispatch_queue_t requestCompleteQueue;
 
-@property (nonatomic, strong) NSMutableDictionary <NSNumber *, WFRequest *>*requestCache;
 @end
 
 @implementation WFNetWorkAgent
@@ -38,7 +52,6 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        _requestCache = @{}.mutableCopy;
         pthread_mutex_init(&_lock, NULL);
     }
     return self;
@@ -50,24 +63,24 @@
     }
 }
 
-- (WFRequest *)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+- (NSUInteger)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     return [self dataTaskWithRequest:request complete:handler];
 }
 
-- (WFRequest *)dataTaskWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+- (NSUInteger)dataTaskWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     
     NSError *error;
     NSString *httpMethod = [self getHTTPMethodWithRequest:request];
     
-    NSMutableURLRequest *urlRequest = [self.sessionManager.requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
+    AFHTTPRequestSerializer *requestSerializer = self.sessionManager.requestSerializer;
+    NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
     urlRequest.timeoutInterval = request.timeoutInterval;
     
-    
-    if (request.cacheOption == kWFHTTPCacheOptionUseCache) {
-        urlRequest.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    }else if(request.cacheOption == kWFHTTPCacheOptionIgnoringCache){
-        urlRequest.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    }
+//    if (request.cacheOption == kWFHTTPCacheOptionUseCache) {
+//        urlRequest.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+//    }else if(request.cacheOption == kWFHTTPCacheOptionIgnoringCache){
+//        urlRequest.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+//    }
     
     if (error && handler) {
         dispatch_async(self.requestCompleteQueue, ^{
@@ -102,10 +115,10 @@
         }
         
     }];
+    [task bindingRequest:request];
+    request.identifier = task.taskIdentifier;
     [task resume];
-    request.task = task;
-    [self cacheRequest:request];
-    return request;
+    return request.identifier;
 }
 
 
@@ -115,24 +128,19 @@
     return methodString;
 }
 
-- (void)cancelRequest:(WFRequest *)request {
-    NSLog(@"cancleed id = %ld",request.task.taskIdentifier);
-    [request.task cancel];
-    [self removeRequestFromCache:request];
-    [request clearCallBack];
-}
-
-
-
-- (void)cacheRequest:(WFRequest *)request {
+- (void)cancelRequest:(NSUInteger)requestID {
+    if (requestID == 0) {
+        return;
+    }
+    __block WFRequest *request;
     WFLock();
-    _requestCache[@(request.task.taskIdentifier)] = request;
-    WFUnlock();
-}
-
-- (void)removeRequestFromCache:(WFRequest *)request {
-    WFLock();
-    [_requestCache removeObjectForKey: @(request.task.taskIdentifier)];
+    [self.sessionManager.tasks enumerateObjectsUsingBlock:^(NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (requestID == obj.taskIdentifier) {
+            request = obj.bindedRequest;
+            [obj cancel];
+            *stop = YES;
+        }
+    }];
     WFUnlock();
 }
 
@@ -149,10 +157,7 @@
 - (AFHTTPSessionManager *)sessionManager {
     if (!_sessionManager) {
         _sessionManager = [AFHTTPSessionManager manager];
-//        _sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
         _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//        _sessionManager.securityPolicy.allowInvalidCertificates = YES;
-//        _sessionManager.securityPolicy.validatesDomainName = NO;
         _sessionManager.completionQueue = self.requestCompleteQueue;
         _sessionManager.operationQueue.maxConcurrentOperationCount = 5;
     }

@@ -11,7 +11,7 @@
 @implementation WFTestCase
 
 - (void)setUp {
-    self.networkTimeout = 60;
+    self.networkTimeout = 20;
 }
 
 - (void)tearDown {

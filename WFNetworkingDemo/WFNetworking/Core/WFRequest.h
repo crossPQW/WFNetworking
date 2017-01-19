@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WFRequest : NSObject<NSCopying>
 
+@property (nonatomic, assign) NSUInteger identifier;
+
 @property (nonatomic, copy, nullable) NSString *host;
 @property (nonatomic, copy, nullable) NSString *api;
 @property (nonatomic, copy, nullable) NSString *url;
@@ -32,7 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly, nullable) WFFinishBlock finishBlock;
 @property (nonatomic, copy, readonly, nullable) WFProgressBlock progressBlock;
 
-@property (nonatomic, strong) NSURLSessionTask *task;
 - (void)clearCallBack;
 @end
 

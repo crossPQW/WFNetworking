@@ -19,54 +19,54 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #pragma mark - send request
-- (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock;
-- (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   failure:(nullable WFFailureBlock)failureBlock;
-- (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
-- (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock
                    finish:(WFFinishBlock)finishBlock;
-- (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                    finish:(WFFinishBlock)finishBlock;
-- (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
-- (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
+- (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock
                    finish:(nullable WFFinishBlock)finishBlock;
 
-+ (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock;
-+ (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   failure:(nullable WFFailureBlock)failureBlock;
-+ (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
-+ (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock
                    finish:(WFFinishBlock)finishBlock;
-+ (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                    finish:(WFFinishBlock)finishBlock;
-+ (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
-+ (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
++ (NSUInteger)sendRequest:(WFRequestConfigBlock)requestBlock
                  Progress:(nullable WFProgressBlock)progressBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock
                    finish:(nullable WFFinishBlock)finishBlock;
 
 #pragma mark - cancel request
-+ (void)cancelRquest:(WFRequest *)request;
++ (void)cancelRquest:(NSUInteger)requestID;
 
 + (void)clearAllCache;
 @end
