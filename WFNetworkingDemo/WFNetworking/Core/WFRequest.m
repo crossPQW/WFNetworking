@@ -13,9 +13,10 @@
 - (instancetype)init {
     if (self = [super init]) {
         //设置默认配置
-        self.requestType = kWFRequestTypeNormal;
-        self.httpMethod = kWFHTTPMethodGET;
+        self.requestType = Normal;
+        self.httpMethod = GET;
         self.timeoutInterval = 60;
+        self.retryTime = 0;
     }
     return self;
 }

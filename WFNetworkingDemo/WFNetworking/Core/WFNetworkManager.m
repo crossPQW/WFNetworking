@@ -12,6 +12,7 @@
 
 @implementation WFNetworkManager
 
+#pragma mark - life cycle
 + (instancetype)manager {
     return [[[self class] alloc] init];
 }
@@ -32,6 +33,8 @@
     return manager;
 }
 
+#pragma mark - ---------------public method-----------------
+#pragma mark - send request
 - (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock {
     return [self sendRequest:requestBlock Progress:nil success:successBlock failure:nil finish:nil];
@@ -111,14 +114,27 @@
     return [[self defaultManager] sendRequest:requestBlock Progress:progressBlock success:successBlock failure:failureBlock finish:finishBlock];
 }
 
+#pragma mark - cancel request
++ (void)cancelRquest:(WFRequest *)request {
+    [[WFNetWorkAgent shareAgent] cancelRequest:request];
+}
+
++ (void)cancelAllRequest {
+    [[WFNetWorkAgent shareAgent] cancelAllRequest];
+}
+
+#pragma mark - clear cache
++ (void)clearAllCache {
+    NSURLCache *cache = [NSURLCache sharedURLCache];
+    [cache removeAllCachedResponses];
+}
+
 #pragma mark - private method
 - (void)processRequest:(WFRequest *)request
                progress:(WFProgressBlock)progressBlock
                 success:(WFSuccessBlock)successBlock
                 failure:(WFFailureBlock)failureBlock
                finished:(WFFinishBlock)finishedBlock {
-    
-    
     
     if (successBlock) {
         [request setValue:successBlock forKey:@"_successBlock"];
@@ -134,6 +150,9 @@
     }
     
     if (request.url.length == 0) {
+        if (request.host.length == 0) {
+            request.host = defaultHost;
+        }
         if (request.api.length > 0) {
             NSURL *baseUrl = [NSURL URLWithString:request.host];
             if (baseUrl.path.length > 0 && ![baseUrl.absoluteString hasSuffix:@"/"]) {
@@ -199,19 +218,4 @@
     
     [request clearCallBack];
 }
-
-+ (void)cancelRquest:(WFRequest *)request {
-    [[WFNetWorkAgent shareAgent] cancelRequest:request];
-}
-
-+ (void)cancelAllRequest {
-    [[WFNetWorkAgent shareAgent] cancelAllRequest];
-}
-
-
-+ (void)clearAllCache {
-    NSURLCache *cache = [NSURLCache sharedURLCache];
-    [cache removeAllCachedResponses];
-}
-
 @end

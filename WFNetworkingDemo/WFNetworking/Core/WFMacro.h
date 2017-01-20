@@ -16,19 +16,21 @@ NS_ASSUME_NONNULL_BEGIN
 @class WFRequest;
 
 typedef NS_ENUM(NSInteger, WFRequestType) {
-    kWFRequestTypeNormal = 0,
-    kWFRequestTypeDownload,
-    kWFRequestTypeUpload
+    Normal = 0,
+    Download,
+    Upload
 };
 
 typedef NS_ENUM(NSInteger, WFHTTPMethod) {
-    kWFHTTPMethodGET = 0,
-    kWFHTTPMethodPOST,
-    kWFHTTPMethodHEAD,
-    kWFHTTPMethodPUT ,
-    kWFHTTPMethodDELETE,
-    kWFHTTPMethodPATCH
+    GET = 0,
+    POST,
+    HEAD,
+    PUT ,
+    DELETE,
+    PATCH
 };
+
+static NSString *const defaultHost = @"https://httpbin.org/";
 
 #pragma mark - callBackBlock
 typedef void (^WFRequestConfigBlock)(WFRequest *request);

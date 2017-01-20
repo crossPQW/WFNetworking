@@ -53,11 +53,11 @@
 
 #pragma mark - public method
 - (WFRequest *)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
-    if (request.requestType == kWFRequestTypeNormal) {
+    if (request.requestType == Normal) {
         return [self dataTaskWithRequest:request complete:handler];
-    }else if (request.requestType == kWFRequestTypeDownload) {
+    }else if (request.requestType == Download) {
         return [self downloadWithRequest:request complete:handler];
-    }else if (request.requestType == kWFRequestTypeUpload){
+    }else if (request.requestType == Upload){
         return [self uploadWithRequest:request complete:handler];
     }else{
         NSAssert(NO, @"request type should not be exist");

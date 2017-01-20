@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype) defaultManager;
 
-
 #pragma mark - send request
 - (WFRequest *)sendRequest:(WFRequestConfigBlock)requestBlock
                   success:(nullable WFSuccessBlock)successBlock;

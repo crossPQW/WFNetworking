@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *fileName;
 @property (nonatomic, copy, nullable) NSString *mimeType;
 
-
 @property (nonatomic, strong, nullable) NSData *fileData;
 @property (nonatomic, strong, nullable) NSURL *fileURL;
 

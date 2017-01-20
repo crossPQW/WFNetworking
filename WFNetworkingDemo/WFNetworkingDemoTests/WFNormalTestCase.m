@@ -31,7 +31,7 @@
 - (void)testGet {
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET request"];
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
-        request.host = @"https://httpbin.org/";
+        
         request.api = @"get";
     } finish:^(id  _Nullable response, NSError * _Nullable error) {
         XCTAssertNotNil(response);
@@ -71,7 +71,7 @@
     XCTestExpectation *ex = [self expectationWithDescription:@"Post request"];
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org/";
-        request.httpMethod = kWFHTTPMethodPOST;
+        request.httpMethod = POST;
         request.api = @"post";
         request.parameters = @{@"key": @"huangshaohua"};
     } success:^(id  _Nullable response) {
@@ -95,7 +95,7 @@
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org";
         request.api = @"get";
-        request.httpMethod = kWFHTTPMethodHEAD;
+        request.httpMethod = HEAD;
     } finish:^(id  _Nullable response, NSError * _Nullable error) {
         XCTAssertNil(error);
         [ex fulfill];
@@ -109,7 +109,7 @@
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org";
         request.api = @"put";
-        request.httpMethod = kWFHTTPMethodPUT;
+        request.httpMethod = PUT;
         request.parameters = @{@"key":@"huangshaohua"};
     } finish:^(id  _Nullable response, NSError * _Nullable error) {
         XCTAssertTrue([response[@"form"][@"key"] isEqualToString:@"huangshaohua"]);
@@ -125,7 +125,7 @@
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org";
         request.api = @"delete";
-        request.httpMethod = kWFHTTPMethodDELETE;
+        request.httpMethod = DELETE;
         request.parameters = @{@"key":@"huangshaohua"};
     } finish:^(id  _Nullable response, NSError * _Nullable error) {
         XCTAssertTrue([response[@"args"][@"key"] isEqualToString:@"huangshaohua"]);
@@ -141,7 +141,7 @@
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org";
         request.api = @"patch";
-        request.httpMethod = kWFHTTPMethodPATCH;
+        request.httpMethod = PATCH;
         request.parameters = @{@"key": @"huangshaohua"};
     } finish:^(id  _Nullable response, NSError * _Nullable error) {
         XCTAssertTrue([response[@"form"][@"key"] isEqualToString:@"huangshaohua"]);
@@ -156,7 +156,7 @@
     XCTestExpectation *ex = [self expectationWithDescription:@"test cancel request"];
     WFRequest *request = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.url = @"https://kangzubin.cn/test/timeout.php";
-        request.httpMethod = kWFHTTPMethodGET;
+        request.httpMethod = GET;
     } success:^(id  _Nullable response) {
         XCTAssertNil(response);
     } failure:^(NSError * _Nullable error) {
@@ -177,7 +177,7 @@
     XCTestExpectation *ex = [self expectationWithDescription:@"test cancel all request"];
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.url = @"https://kangzubin.cn/test/timeout.php";
-        request.httpMethod = kWFHTTPMethodGET;
+        request.httpMethod = GET;
     } success:^(id  _Nullable response) {
         XCTAssertNil(response);
     } failure:^(NSError * _Nullable error) {
@@ -197,7 +197,7 @@
 - (void)testDownloadRequest {
     XCTestExpectation *ex = [self expectationWithDescription:@"test download request"];
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
-        request.requestType = kWFRequestTypeDownload;
+        request.requestType = Download;
         request.url = @"http://i9.download.fd.pchome.net/g1/M00/09/0C/oYYBAFOzfi6IFsMOABKOGmYqrKQAABr-AKfW0YAEo4y231.jpg";
         request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test1.png"];
     } Progress:^(NSProgress * _Nonnull progress) {
@@ -229,7 +229,7 @@
     [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org/";
         request.api = @"post";
-        request.requestType = kWFRequestTypeUpload;
+        request.requestType = Upload;
         [request addFormDataWithName:@"image" fileName:@"5784519b580b4.jpg" mimeType:@"image/jpeg" fileData:fileData];
     } Progress:^(NSProgress * _Nonnull progress) {
         NSLog(@"*********progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
@@ -254,7 +254,7 @@
 - (void)testCancelDownloadRequest {
     XCTestExpectation *ex = [self expectationWithDescription:@"test cancel download request"];
     WFRequest *request = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
-        request.requestType = kWFRequestTypeDownload;
+        request.requestType = Download;
         request.url = @"http://i9.download.fd.pchome.net/g1/M00/09/0C/oYYBAFOzfi6IFsMOABKOGmYqrKQAABr-AKfW0YAEo4y231.jpg";
         request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test1.png"];
     } Progress:^(NSProgress * _Nonnull progress) {
