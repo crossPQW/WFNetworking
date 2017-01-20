@@ -154,7 +154,7 @@
 
 - (void)testCancelRequest {
     XCTestExpectation *ex = [self expectationWithDescription:@"test cancel request"];
-    NSUInteger ID = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    WFRequest *request = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
         request.url = @"https://kangzubin.cn/test/timeout.php";
         request.httpMethod = kWFHTTPMethodGET;
     } success:^(id  _Nullable response) {
@@ -168,7 +168,28 @@
     }];
     
     sleep(5);
-    [WFNetworkManager cancelRquest:ID];
+    [WFNetworkManager cancelRquest:request];
+    
+    [self waitForExpectationsWithCommonTimeout];
+}
+
+- (void)testCancelAllRequest {
+    XCTestExpectation *ex = [self expectationWithDescription:@"test cancel all request"];
+    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+        request.url = @"https://kangzubin.cn/test/timeout.php";
+        request.httpMethod = kWFHTTPMethodGET;
+    } success:^(id  _Nullable response) {
+        XCTAssertNil(response);
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertTrue(error.code == NSURLErrorCancelled);
+    } finish:^(id  _Nullable response, NSError * _Nullable error) {
+        XCTAssertNil(response);
+        XCTAssertTrue(error.code == NSURLErrorCancelled);
+        [ex fulfill];
+    }];
+    
+    sleep(5);
+    [WFNetworkManager cancelAllRequest];
     
     [self waitForExpectationsWithCommonTimeout];
 }
@@ -226,6 +247,32 @@
         XCTAssertNil(error);
         [ex fulfill];
     }];
+    
+    [self waitForExpectationsWithCommonTimeout];
+}
+
+- (void)testCancelDownloadRequest {
+    XCTestExpectation *ex = [self expectationWithDescription:@"test cancel download request"];
+    WFRequest *request = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+        request.requestType = kWFRequestTypeDownload;
+        request.url = @"http://i9.download.fd.pchome.net/g1/M00/09/0C/oYYBAFOzfi6IFsMOABKOGmYqrKQAABr-AKfW0YAEo4y231.jpg";
+        request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test1.png"];
+    } Progress:^(NSProgress * _Nonnull progress) {
+        NSLog(@"*********progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
+        if (progress.fractionCompleted == 1) {
+            
+        }
+    } success:^(id  _Nullable response) {
+        XCTAssertNil(response);
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertTrue(error.code == NSURLErrorCancelled);
+    } finish:^(id  _Nullable response, NSError * _Nullable error) {
+        XCTAssertNil(response);
+        XCTAssertTrue(error.code == NSURLErrorCancelled);
+        [ex fulfill];
+    }];
+    
+    [WFNetworkManager cancelRquest:request];
     
     [self waitForExpectationsWithCommonTimeout];
 }

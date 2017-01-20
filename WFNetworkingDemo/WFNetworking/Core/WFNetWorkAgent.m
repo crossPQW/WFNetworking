@@ -51,7 +51,8 @@
     }
 }
 
-- (NSUInteger)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+#pragma mark - public method
+- (WFRequest *)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     if (request.requestType == kWFRequestTypeNormal) {
         return [self dataTaskWithRequest:request complete:handler];
     }else if (request.requestType == kWFRequestTypeDownload) {
@@ -60,15 +61,32 @@
         return [self uploadWithRequest:request complete:handler];
     }else{
         NSAssert(NO, @"request type should not be exist");
-        return 0;
+        return nil;
     }
 }
 
-- (NSUInteger)dataTaskWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+- (void)cancelRequest:(WFRequest *)request {
+    if (!request) {
+        return;
+    }
+    [request.task cancel];
+    [self removeRequestFromCache:request];
+}
+
+- (void)cancelAllRequest {
+    WFLock();
+    NSArray *requests = [self.requestCache allValues];
+    WFUnlock();
+    [requests enumerateObjectsUsingBlock:^(WFRequest *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self cancelRequest:obj];
+    }];
+}
+
+#pragma mark - private method
+- (WFRequest *)dataTaskWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     
     NSError *error;
     NSString *httpMethod = [self getHTTPMethodWithRequest:request];
-    
     
     NSMutableURLRequest *urlRequest = [self.sessionManager.requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
     urlRequest.timeoutInterval = request.timeoutInterval;
@@ -83,6 +101,10 @@
     [self addHeaderForUrlRequest:urlRequest withRequest:request];
     
     NSURLSessionDataTask *task = [self.sessionManager dataTaskWithRequest:urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if (error && handler) {
+            handler(nil, error);
+        }
         
         if ([responseObject isKindOfClass:[NSData class]]) {
             NSError *serializationError;
@@ -103,10 +125,10 @@
         
     }];
     [self bindingRequest:request forTask:task];
-    return request.identifier;
+    return request;
 }
 
-- (NSUInteger)downloadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+- (WFRequest *)downloadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:request.url] cachePolicy:0 timeoutInterval:request.timeoutInterval];
     [self addHeaderForUrlRequest:urlRequest withRequest:request];
     
@@ -131,10 +153,10 @@
         }
     }];
     [self bindingRequest:request forTask:downloadTask];
-    return request.identifier;
+    return request;
 }
 
-- (NSUInteger)uploadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+- (WFRequest *)uploadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
     
     __block NSError *serializationError;
     NSMutableURLRequest *urlRequest = [self.sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:request.url parameters:request.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -165,12 +187,16 @@
         dispatch_async(self.requestCompleteQueue, ^{
             handler(nil, serializationError);
         });
-        return 0;
+        return nil;
     }
     
     urlRequest.timeoutInterval = request.timeoutInterval;
     [self addHeaderForUrlRequest:urlRequest withRequest:request];
     NSURLSessionUploadTask *uploadTask = [self.sessionManager uploadTaskWithStreamedRequest:urlRequest progress:request.progressBlock completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if (error && handler) {
+            handler(nil, error);
+        }
         
         if ([responseObject isKindOfClass:[NSData class]]) {
             NSError *serializationError;
@@ -189,11 +215,11 @@
         }
     }];
     [self bindingRequest:request forTask:uploadTask];
-    return 0;
+    return request;
 }
 
 - (void)bindingRequest:(WFRequest *)request forTask:(NSURLSessionTask *)task {
-    request.identifier = task.taskIdentifier;
+    request.task = task;
     [self cacheRequest:request];
     [task resume];
 }
@@ -209,21 +235,14 @@
 
 - (void)cacheRequest:(WFRequest *)request {
     WFLock();
-    self.requestCache[@(request.identifier)] = request;
+    self.requestCache[@(request.task.taskIdentifier)] = request;
     WFUnlock();
 }
 
 - (void)removeRequestFromCache:(WFRequest *)request {
     WFLock();
-    [self.requestCache removeObjectForKey:@(request.identifier)];
+    [self.requestCache removeObjectForKey:@(request.task.taskIdentifier)];
     WFUnlock();
-}
-
-- (WFRequest *)getRequestFromCacheWithID:(NSUInteger)identifier {
-    WFLock();
-    WFRequest *request = self.requestCache[@(identifier)];
-    WFUnlock();
-    return request;
 }
 
 - (NSString *)getHTTPMethodWithRequest:(WFRequest *)request {
@@ -232,22 +251,9 @@
     return methodString;
 }
 
-- (void)cancelRequest:(NSUInteger)requestID {
-    if (requestID == 0) {
-        return;
-    }
-    WFRequest *request = [self getRequestFromCacheWithID:requestID];
-    WFLock();
-    [self.sessionManager.tasks enumerateObjectsUsingBlock:^(NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (request.identifier == obj.taskIdentifier) {
-            [obj cancel];
-            *stop = YES;
-        }
-    }];
-    WFUnlock();
-    [self removeRequestFromCache:request];
-}
 
+
+#pragma mark - getter
 - (dispatch_queue_t)requestCompleteQueue {
     //请求完线程
     static dispatch_queue_t request_completion_callback_queue;

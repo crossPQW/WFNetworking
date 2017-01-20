@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WFRequest : NSObject<NSCopying>
 
-@property (nonatomic, assign) NSUInteger identifier;
+@property (nonatomic, strong) NSURLSessionTask *task;
 
 @property (nonatomic, copy, nullable) NSString *host;
 @property (nonatomic, copy, nullable) NSString *api;

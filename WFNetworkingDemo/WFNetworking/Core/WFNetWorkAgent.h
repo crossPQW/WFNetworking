@@ -22,9 +22,10 @@ typedef void(^WFCompletedHandler)(id _Nullable response, NSError *error);
 + (instancetype)shareAgent;
 
 
-- (NSUInteger)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler;
+- (WFRequest *)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler;
 
-- (void)cancelRequest:(NSUInteger)requestID;
+- (void)cancelRequest:(WFRequest *)request;
+- (void)cancelAllRequest;
 @end
 
 NS_ASSUME_NONNULL_END
