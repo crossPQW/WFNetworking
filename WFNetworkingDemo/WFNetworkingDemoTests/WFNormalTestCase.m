@@ -197,4 +197,36 @@
     
     [self waitForExpectationsWithCommonTimeout];
 }
+
+- (void)testUploadRequest {
+    XCTestExpectation *ex = [self expectationWithDescription:@"test upload request"];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"5784519b580b4" ofType:@"jpg"];
+    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    NSData *fileData = UIImageJPEGRepresentation(image, 1.0);
+    
+    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+        request.host = @"https://httpbin.org/";
+        request.api = @"post";
+        request.requestType = kWFRequestTypeUpload;
+        [request addFormDataWithName:@"image" fileName:@"5784519b580b4.jpg" mimeType:@"image/jpeg" fileData:fileData];
+    } Progress:^(NSProgress * _Nonnull progress) {
+        NSLog(@"*********progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
+        if (progress.fractionCompleted == 1) {
+            
+        }
+    } success:^(id  _Nullable response) {
+        XCTAssertNotNil(response);
+        XCTAssertNotNil(response[@"files"][@"image"]);
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
+    } finish:^(id  _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(response[@"files"][@"image"]);
+        XCTAssertNotNil(response);
+        XCTAssertNil(error);
+        [ex fulfill];
+    }];
+    
+    [self waitForExpectationsWithCommonTimeout];
+}
 @end

@@ -30,11 +30,6 @@ typedef NS_ENUM(NSInteger, WFHTTPMethod) {
     kWFHTTPMethodPATCH
 };
 
-typedef NS_ENUM(NSInteger, WFHTTPCacheOption) {
-    kWFHTTPCacheOptionUseCache = 0, //使用缓存
-    kWFHTTPCacheOptionIgnoringCache,//忽略缓存
-};
-
 #pragma mark - callBackBlock
 typedef void (^WFRequestConfigBlock)(WFRequest *request);
 typedef void (^WFProgressBlock)(NSProgress  *progress);

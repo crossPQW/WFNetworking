@@ -26,6 +26,8 @@
 		385821D61E264B4800A50E1B /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 385821CC1E264B4800A50E1B /* AFURLSessionManager.m */; };
 		386CE10B1E2CCF570030FFF9 /* WFTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 386CE10A1E2CCF570030FFF9 /* WFTestCase.m */; };
 		386CE10D1E2CCF690030FFF9 /* WFNormalTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 386CE10C1E2CCF690030FFF9 /* WFNormalTestCase.m */; };
+		38701E551E31E9DA00399E63 /* WFUploadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 38701E541E31E9DA00399E63 /* WFUploadData.m */; };
+		38701E571E31F47400399E63 /* 5784519b580b4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 38701E561E31F47400399E63 /* 5784519b580b4.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,9 @@
 		386CE1091E2CCF570030FFF9 /* WFTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFTestCase.h; sourceTree = "<group>"; };
 		386CE10A1E2CCF570030FFF9 /* WFTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFTestCase.m; sourceTree = "<group>"; };
 		386CE10C1E2CCF690030FFF9 /* WFNormalTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFNormalTestCase.m; sourceTree = "<group>"; };
+		38701E531E31E9DA00399E63 /* WFUploadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFUploadData.h; sourceTree = "<group>"; };
+		38701E541E31E9DA00399E63 /* WFUploadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFUploadData.m; sourceTree = "<group>"; };
+		38701E561E31F47400399E63 /* 5784519b580b4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5784519b580b4.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +142,7 @@
 		385821811E264B1000A50E1B /* WFNetworkingDemo */ = {
 			isa = PBXGroup;
 			children = (
+				38701E561E31F47400399E63 /* 5784519b580b4.jpg */,
 				385821851E264B1000A50E1B /* AppDelegate.h */,
 				385821861E264B1000A50E1B /* AppDelegate.m */,
 				385821881E264B1000A50E1B /* ViewController.h */,
@@ -199,6 +205,8 @@
 				385821BB1E264B4800A50E1B /* WFNetworkManager.m */,
 				385821B81E264B4800A50E1B /* WFNetWorkAgent.h */,
 				385821B91E264B4800A50E1B /* WFNetWorkAgent.m */,
+				38701E531E31E9DA00399E63 /* WFUploadData.h */,
+				38701E541E31E9DA00399E63 /* WFUploadData.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -340,6 +348,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38701E571E31F47400399E63 /* 5784519b580b4.jpg in Resources */,
 				385821921E264B1000A50E1B /* LaunchScreen.storyboard in Resources */,
 				3858218F1E264B1000A50E1B /* Assets.xcassets in Resources */,
 				3858218D1E264B1000A50E1B /* Main.storyboard in Resources */,
@@ -372,6 +381,7 @@
 				385821CF1E264B4800A50E1B /* WFNetworkManager.m in Sources */,
 				385821D01E264B4800A50E1B /* WFRequest.m in Sources */,
 				385821D51E264B4800A50E1B /* AFURLResponseSerialization.m in Sources */,
+				38701E551E31E9DA00399E63 /* WFUploadData.m in Sources */,
 				385821CE1E264B4800A50E1B /* WFNetWorkAgent.m in Sources */,
 				385821871E264B1000A50E1B /* AppDelegate.m in Sources */,
 				385821D11E264B4800A50E1B /* AFHTTPSessionManager.m in Sources */,

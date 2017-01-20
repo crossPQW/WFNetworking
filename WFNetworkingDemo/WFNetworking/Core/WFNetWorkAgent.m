@@ -81,15 +81,9 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
     NSError *error;
     NSString *httpMethod = [self getHTTPMethodWithRequest:request];
     
-    AFHTTPRequestSerializer *requestSerializer = self.sessionManager.requestSerializer;
-    NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
-    urlRequest.timeoutInterval = request.timeoutInterval;
     
-    if (request.cachePolicy == kWFHTTPCacheOptionUseCache) {
-        urlRequest.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    }else if(request.cachePolicy == kWFHTTPCacheOptionIgnoringCache){
-        urlRequest.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    }
+    NSMutableURLRequest *urlRequest = [self.sessionManager.requestSerializer requestWithMethod:httpMethod URLString:request.url parameters:request.parameters error:&error];
+    urlRequest.timeoutInterval = request.timeoutInterval;
     
     if (error && handler) {
         dispatch_async(self.requestCompleteQueue, ^{
@@ -105,6 +99,7 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
         if ([responseObject isKindOfClass:[NSData class]]) {
             NSError *serializationError;
             responseObject = [self.afJSONResponseSerializer responseObjectForResponse:response data:responseObject error:&serializationError];
+            
             if (handler) {
                 if (serializationError) {
                     handler(nil, serializationError);
@@ -119,20 +114,12 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
         }
         
     }];
-    [task bindingRequest:request];
-    request.identifier = task.taskIdentifier;
-    [task resume];
+    [self bindingRequest:request forTask:task];
     return request.identifier;
 }
 
 - (NSUInteger)downloadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
-    NSURLRequestCachePolicy cachePolicy;
-    if (request.cachePolicy == kWFHTTPCacheOptionUseCache) {
-        cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    }else if(request.cachePolicy == kWFHTTPCacheOptionIgnoringCache){
-        cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    }
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:request.url] cachePolicy:cachePolicy timeoutInterval:request.timeoutInterval];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:request.url] cachePolicy:0 timeoutInterval:request.timeoutInterval];
     [self addHeaderForUrlRequest:urlRequest withRequest:request];
     
     BOOL isDirectory;
@@ -155,14 +142,72 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
             handler(filePath, error);
         }
     }];
-    [downloadTask bindingRequest:request];
-    request.identifier = downloadTask.taskIdentifier;
-    [downloadTask resume];
+    [self bindingRequest:request forTask:downloadTask];
     return request.identifier;
 }
 
 - (NSUInteger)uploadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
+    
+    __block NSError *serializationError;
+    NSMutableURLRequest *urlRequest = [self.sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:request.url parameters:request.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [request.uploadDatas enumerateObjectsUsingBlock:^(WFUploadData * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            //upload Data
+            if (obj.fileData) {
+                if (obj.fileName && obj.mimeType) {
+                    [formData appendPartWithFileData:obj.fileData name:obj.name fileName:obj.fileName mimeType:obj.mimeType];
+                }else{
+                    [formData appendPartWithFormData:obj.fileData name:obj.name];
+                }
+            }else if (obj.fileURL){//upload by URL
+                NSError *error;
+                if (obj.fileName && obj.mimeType) {
+                    [formData appendPartWithFileURL:obj.fileURL name:obj.name fileName:obj.fileName mimeType:obj.mimeType error:&error];
+                }else{
+                    [formData appendPartWithFileURL:obj.fileURL name:obj.name error:&error];
+                }
+                if (error) {
+                    serializationError = error;
+                    *stop = YES;
+                }
+            }
+        }];
+    } error:&serializationError];
+    
+    if (serializationError && handler) {
+        dispatch_async(self.requestCompleteQueue, ^{
+            handler(nil, serializationError);
+        });
+        return 0;
+    }
+    
+    urlRequest.timeoutInterval = request.timeoutInterval;
+    [self addHeaderForUrlRequest:urlRequest withRequest:request];
+    NSURLSessionUploadTask *uploadTask = [self.sessionManager uploadTaskWithStreamedRequest:urlRequest progress:request.progressBlock completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if ([responseObject isKindOfClass:[NSData class]]) {
+            NSError *serializationError;
+            responseObject = [self.afJSONResponseSerializer responseObjectForResponse:response data:responseObject error:&serializationError];
+            if (handler) {
+                if (serializationError) {
+                    handler(nil, serializationError);
+                }else{
+                    handler(responseObject, error);
+                }
+            }
+        }else{
+            if (handler) {
+                handler(responseObject, error);
+            }
+        }
+    }];
+    [self bindingRequest:request forTask:uploadTask];
     return 0;
+}
+
+- (void)bindingRequest:(WFRequest *)request forTask:(NSURLSessionTask *)task {
+    [task bindingRequest:request];
+    request.identifier = task.taskIdentifier;
+    [task resume];
 }
 
 - (void)addHeaderForUrlRequest:(NSMutableURLRequest *)urlRequest withRequest:(WFRequest *)request {
@@ -219,7 +264,7 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
 - (AFJSONRequestSerializer *)afJSONRequestSerializer {
     if (!_afJSONRequestSerializer) {
         _afJSONRequestSerializer = [AFJSONRequestSerializer serializer];
-        
+        _afJSONRequestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     }
     return _afJSONRequestSerializer;
 }

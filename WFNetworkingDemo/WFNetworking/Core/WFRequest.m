@@ -16,7 +16,6 @@
         self.requestType = kWFRequestTypeNormal;
         self.httpMethod = kWFHTTPMethodGET;
         self.timeoutInterval = 60;
-        self.cachePolicy = kWFHTTPCacheOptionUseCache;
     }
     return self;
 }
@@ -31,5 +30,22 @@
     _failureBlock = nil;
     _progressBlock = nil;
     _finishBlock = nil;
+}
+
+- (NSMutableArray<WFUploadData *> *)uploadDatas {
+    if (!_uploadDatas) {
+        _uploadDatas = @[].mutableCopy;
+    }
+    return _uploadDatas;
+}
+
+- (void)addFormDataWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType fileURL:(NSURL *)fileURL {
+    WFUploadData *data = [WFUploadData dataWithName:name fileName:fileName mimeType:mimeType fileURL:fileURL];
+    [self.uploadDatas addObject:data];
+}
+
+- (void)addFormDataWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType fileData:(NSData *)fileData {
+    WFUploadData *data = [WFUploadData dataWithName:name fileName:fileName mimeType:mimeType fileData:fileData];
+    [self.uploadDatas addObject:data];
 }
 @end

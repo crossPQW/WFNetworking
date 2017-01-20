@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WFMacro.h"
+#import "WFUploadData.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,14 +31,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSTimeInterval timeoutInterval;
 @property (nonatomic, assign) NSInteger retryTime;
-@property (nonatomic, assign) WFHTTPCacheOption cachePolicy;
 
 @property (nonatomic, copy, readonly, nullable) WFSuccessBlock successBlock;
 @property (nonatomic, copy, readonly, nullable) WFFailureBlock failureBlock;
 @property (nonatomic, copy, readonly, nullable) WFFinishBlock finishBlock;
 @property (nonatomic, copy, readonly, nullable) WFProgressBlock progressBlock;
 
+@property (nonatomic, strong, nullable) NSMutableArray<WFUploadData *>*uploadDatas;
+
 - (void)clearCallBack;
+
+- (void)addFormDataWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType fileURL:(NSURL *)fileURL;
+- (void)addFormDataWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType fileData:(NSData *)fileData;
 @end
 
 NS_ASSUME_NONNULL_END
