@@ -12,20 +12,6 @@
 #import <pthread/pthread.h>
 #import <objc/runtime.h>
 
-@implementation NSObject (BindingRequestForNSURLSessionTask)
-
-static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
-
-- (void)bindingRequest:(WFRequest *)request {
-    objc_setAssociatedObject(self, (__bridge CFStringRef)kWFRequestBindingKey, request, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (WFRequest *)bindedRequest {
-    WFRequest *request = objc_getAssociatedObject(self, (__bridge CFStringRef)kWFRequestBindingKey);
-    return request;
-}
-@end
-
 @interface WFNetWorkAgent(){
     pthread_mutex_t _lock;
 }
@@ -37,6 +23,7 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
 
 @property (nonatomic, strong) dispatch_queue_t requestCompleteQueue;
 
+@property (nonatomic, strong) NSMutableDictionary <NSNumber *,WFRequest *>*requestCache;
 @end
 
 @implementation WFNetWorkAgent
@@ -53,6 +40,7 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
 - (instancetype)init {
     if (self = [super init]) {
         pthread_mutex_init(&_lock, NULL);
+        _requestCache = @{}.mutableCopy;
     }
     return self;
 }
@@ -205,8 +193,8 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
 }
 
 - (void)bindingRequest:(WFRequest *)request forTask:(NSURLSessionTask *)task {
-    [task bindingRequest:request];
     request.identifier = task.taskIdentifier;
+    [self cacheRequest:request];
     [task resume];
 }
 
@@ -219,6 +207,25 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
     }
 }
 
+- (void)cacheRequest:(WFRequest *)request {
+    WFLock();
+    self.requestCache[@(request.identifier)] = request;
+    WFUnlock();
+}
+
+- (void)removeRequestFromCache:(WFRequest *)request {
+    WFLock();
+    [self.requestCache removeObjectForKey:@(request.identifier)];
+    WFUnlock();
+}
+
+- (WFRequest *)getRequestFromCacheWithID:(NSUInteger)identifier {
+    WFLock();
+    WFRequest *request = self.requestCache[@(identifier)];
+    WFUnlock();
+    return request;
+}
+
 - (NSString *)getHTTPMethodWithRequest:(WFRequest *)request {
     NSArray * httpMethodArray = @[@"GET", @"POST", @"HEAD", @"PUT", @"DELETE", @"PATCH"];
     NSString *methodString = httpMethodArray[request.httpMethod];
@@ -229,16 +236,16 @@ static NSString * const kWFRequestBindingKey = @"kXMRequestBindingKey";
     if (requestID == 0) {
         return;
     }
-    __block WFRequest *request;
+    WFRequest *request = [self getRequestFromCacheWithID:requestID];
     WFLock();
     [self.sessionManager.tasks enumerateObjectsUsingBlock:^(NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (requestID == obj.taskIdentifier) {
-            request = obj.bindedRequest;
+        if (request.identifier == obj.taskIdentifier) {
             [obj cancel];
             *stop = YES;
         }
     }];
     WFUnlock();
+    [self removeRequestFromCache:request];
 }
 
 - (dispatch_queue_t)requestCompleteQueue {
