@@ -10,6 +10,7 @@
 
 @implementation WFRequest
 
+#pragma mark - life cycle
 - (instancetype)init {
     if (self = [super init]) {
         //设置默认配置
@@ -26,18 +27,12 @@
     return copy;
 }
 
+#pragma mark - private method
 - (void)clearCallBack {
     _successBlock = nil;
     _failureBlock = nil;
     _progressBlock = nil;
     _finishBlock = nil;
-}
-
-- (NSMutableArray<WFUploadData *> *)uploadDatas {
-    if (!_uploadDatas) {
-        _uploadDatas = @[].mutableCopy;
-    }
-    return _uploadDatas;
 }
 
 - (void)addFormDataWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType fileURL:(NSURL *)fileURL {
@@ -48,5 +43,13 @@
 - (void)addFormDataWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType fileData:(NSData *)fileData {
     WFUploadData *data = [WFUploadData dataWithName:name fileName:fileName mimeType:mimeType fileData:fileData];
     [self.uploadDatas addObject:data];
+}
+
+#pragma mark - getter
+- (NSMutableArray<WFUploadData *> *)uploadDatas {
+    if (!_uploadDatas) {
+        _uploadDatas = @[].mutableCopy;
+    }
+    return _uploadDatas;
 }
 @end

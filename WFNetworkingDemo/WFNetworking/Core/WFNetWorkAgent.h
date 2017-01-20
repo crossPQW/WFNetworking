@@ -17,10 +17,7 @@ typedef void(^WFCompletedHandler)(id _Nullable response, NSError *error);
 
 @interface WFNetWorkAgent : NSObject
 
-
-
 + (instancetype)shareAgent;
-
 
 - (WFRequest *)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler;
 
