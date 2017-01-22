@@ -45,6 +45,9 @@
     [self.uploadDatas addObject:data];
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"request : host: %@ \n api: %@ \n url: %@ \n parameters: %@ \n httpmethod: %ld",self.host,self.api,self.url,self.parameters,(long)self.httpMethod];
+}
 #pragma mark - getter
 - (NSMutableArray<WFUploadData *> *)uploadDatas {
     if (!_uploadDatas) {
