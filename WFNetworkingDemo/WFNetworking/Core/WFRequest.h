@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WFRequest : NSObject<NSCopying>
 
-@property (nonatomic, strong) NSURLSessionTask *task;
-
 /**
  可为空，若为空，则使用WFMacro中默认host值
  */
@@ -80,6 +78,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong, nullable) NSMutableArray<WFUploadData *>*uploadDatas;
 
+
+/**
+ request block call bacl queue
+ */
+@property (nonatomic, strong, nullable) dispatch_queue_t callbackQueue;
+
+/**
+ 与 request 绑定的 sessionTask
+ */
+@property (nonatomic, strong) NSURLSessionTask *task;
 
 /**
  清空回调，防止产生 retain cycle

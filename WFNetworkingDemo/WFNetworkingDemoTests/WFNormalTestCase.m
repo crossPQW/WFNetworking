@@ -30,13 +30,15 @@
 
 - (void)testGet {
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET request"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
-        
+
+    [WFNetworkManager getRequest:^(WFRequest * _Nonnull request) {
         request.api = @"get";
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
+    } success:^(id  _Nullable response) {
         XCTAssertNotNil(response);
         XCTAssertTrue([response isKindOfClass:[NSDictionary class]]);
         [expectation fulfill];
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
     }];
     
     [self waitForExpectationsWithCommonTimeout];
@@ -44,24 +46,19 @@
 
 - (void)testGetWithParameters {
     XCTestExpectation *ex = [self expectationWithDescription:@"Get request with perameter"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    
+    [WFNetworkManager getRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org/";
         request.api = @"get";
-        request.parameters = @{@"key": @"huangshaohua"};
+        request.parameters = @{@"key": @"test"};
     } success:^(id  _Nullable response) {
         XCTAssertNotNil(response);
         XCTAssertTrue([response isKindOfClass:[NSDictionary class]]);
         NSString *value = response[@"args"][@"key"];
-        XCTAssertTrue([value isEqualToString:@"huangshaohua"]);
+        XCTAssertTrue([value isEqualToString:@"test"]);
+        [ex fulfill];
     } failure:^(NSError * _Nullable error) {
         XCTAssertNil(error);
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        XCTAssertNotNil(response);
-        XCTAssertTrue([response isKindOfClass:[NSDictionary class]]);
-        NSString *value = response[@"args"][@"key"];
-        XCTAssertTrue([value isEqualToString:@"huangshaohua"]);
-        XCTAssertNil(error);
-        [ex fulfill];
     }];
     
     [self waitForExpectationsWithCommonTimeout];
@@ -69,22 +66,17 @@
 
 - (void)testPost {
     XCTestExpectation *ex = [self expectationWithDescription:@"Post request"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    [WFNetworkManager postRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org/";
-        request.httpMethod = POST;
         request.api = @"post";
-        request.parameters = @{@"key": @"huangshaohua"};
+        request.parameters = @{@"key": @"test"};
     } success:^(id  _Nullable response) {
         XCTAssertTrue([response isKindOfClass:[NSDictionary class]]);
         NSString *value = response[@"form"][@"key"];
-        XCTAssertTrue([value isEqualToString:@"huangshaohua"]);
+        XCTAssertTrue([value isEqualToString:@"test"]);
+        [ex fulfill];
     } failure:^(NSError * _Nullable error) {
         XCTAssertNil(error);
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        XCTAssertTrue([response isKindOfClass:[NSDictionary class]]);
-        NSString *value = response[@"form"][@"key"];
-        XCTAssertTrue([value isEqualToString:@"huangshaohua"]);
-        [ex fulfill];
     }];
     
     [self waitForExpectationsWithCommonTimeout];
@@ -92,29 +84,29 @@
 
 - (void)testHEAD {
     XCTestExpectation *ex = [self expectationWithDescription:@"Head request"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    [WFNetworkManager headRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org";
         request.api = @"get";
-        request.httpMethod = HEAD;
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        XCTAssertNil(error);
+    } success:^(id  _Nullable response) {
         [ex fulfill];
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
     }];
-    
+
     [self waitForExpectationsWithCommonTimeout];
 }
 
 - (void)testPUT {
     XCTestExpectation *ex = [self expectationWithDescription:@"PUT request"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    [WFNetworkManager putRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org";
         request.api = @"put";
-        request.httpMethod = PUT;
-        request.parameters = @{@"key":@"huangshaohua"};
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        XCTAssertTrue([response[@"form"][@"key"] isEqualToString:@"huangshaohua"]);
-        XCTAssertNil(error);
+        request.parameters = @{@"key":@"test"};
+    } success:^(id  _Nullable response) {
+        XCTAssertTrue([response[@"form"][@"key"] isEqualToString:@"test"]);
         [ex fulfill];
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
     }];
     
     [self waitForExpectationsWithCommonTimeout];
@@ -122,15 +114,16 @@
 
 - (void)testDELETE {
     XCTestExpectation *expectation = [self expectationWithDescription:@"DELETE request"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    
+    [WFNetworkManager deleteRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org";
         request.api = @"delete";
-        request.httpMethod = DELETE;
-        request.parameters = @{@"key":@"huangshaohua"};
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        XCTAssertTrue([response[@"args"][@"key"] isEqualToString:@"huangshaohua"]);
-        XCTAssertNil(error);
+        request.parameters = @{@"key":@"test"};
+    } success:^(id  _Nullable response) {
+        XCTAssertTrue([response[@"args"][@"key"] isEqualToString:@"test"]);
         [expectation fulfill];
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
     }];
 
     [self waitForExpectationsWithCommonTimeout];
@@ -138,15 +131,15 @@
 
 - (void)testPATCH {
     XCTestExpectation *expectation = [self expectationWithDescription:@"PATCH request"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    [WFNetworkManager patchRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org";
         request.api = @"patch";
-        request.httpMethod = PATCH;
-        request.parameters = @{@"key": @"huangshaohua"};
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        XCTAssertTrue([response[@"form"][@"key"] isEqualToString:@"huangshaohua"]);
-        XCTAssertNil(error);
+        request.parameters = @{@"key": @"test"};
+    } success:^(id  _Nullable response) {
+        XCTAssertTrue([response[@"form"][@"key"] isEqualToString:@"test"]);
         [expectation fulfill];
+    } failure:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
     }];
 
     [self waitForExpectationsWithCommonTimeout];
@@ -154,15 +147,11 @@
 
 - (void)testCancelRequest {
     XCTestExpectation *ex = [self expectationWithDescription:@"test cancel request"];
-    WFRequest *request = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    WFRequest *request = [WFNetworkManager getRequest:^(WFRequest * _Nonnull request) {
         request.url = @"https://kangzubin.cn/test/timeout.php";
-        request.httpMethod = GET;
     } success:^(id  _Nullable response) {
         XCTAssertNil(response);
     } failure:^(NSError * _Nullable error) {
-        XCTAssertTrue(error.code == NSURLErrorCancelled);
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        XCTAssertNil(response);
         XCTAssertTrue(error.code == NSURLErrorCancelled);
         [ex fulfill];
     }];
@@ -175,15 +164,11 @@
 
 - (void)testCancelAllRequest {
     XCTestExpectation *ex = [self expectationWithDescription:@"test cancel all request"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    [WFNetworkManager getRequest:^(WFRequest * _Nonnull request) {
         request.url = @"https://kangzubin.cn/test/timeout.php";
-        request.httpMethod = GET;
     } success:^(id  _Nullable response) {
         XCTAssertNil(response);
     } failure:^(NSError * _Nullable error) {
-        XCTAssertTrue(error.code == NSURLErrorCancelled);
-    } finish:^(id  _Nullable response, NSError * _Nullable error) {
-        XCTAssertNil(response);
         XCTAssertTrue(error.code == NSURLErrorCancelled);
         [ex fulfill];
     }];
@@ -196,19 +181,19 @@
 
 - (void)testDownloadRequest {
     XCTestExpectation *ex = [self expectationWithDescription:@"test download request"];
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
-        request.requestType = Download;
-        request.url = @"http://i9.download.fd.pchome.net/g1/M00/09/0C/oYYBAFOzfi6IFsMOABKOGmYqrKQAABr-AKfW0YAEo4y231.jpg";
-        request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test1.png"];
-    } Progress:^(NSProgress * _Nonnull progress) {
+    [WFNetworkManager downloadRequest:^(WFRequest * _Nonnull request) {
+        request.url = @"http://cimg2.163.com/catchpic/1/1A/1AE6BA37579B21A3D3C40BB58643952C.jpg";
+        request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test3.png"];
+    } progress:^(NSProgress * _Nonnull progress) {
         NSLog(@"*********progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
         if (progress.fractionCompleted == 1) {
-            
         }
     } success:^(id  _Nullable response) {
+        NSLog(@"success block response == %@",response);
         XCTAssertNotNil(response);
         XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:((NSURL *)response).path]);
     } failure:^(NSError * _Nullable error) {
+        NSLog(@"error block == %@",error);
         XCTAssertNil(error);
     } finish:^(id  _Nullable response, NSError * _Nullable error) {
         XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:((NSURL *)response).path]);
@@ -226,12 +211,11 @@
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     NSData *fileData = UIImageJPEGRepresentation(image, 1.0);
     
-    [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
+    [WFNetworkManager uploadRequest:^(WFRequest * _Nonnull request) {
         request.host = @"https://httpbin.org/";
         request.api = @"post";
-        request.requestType = Upload;
         [request addFormDataWithName:@"image" fileName:@"5784519b580b4.jpg" mimeType:@"image/jpeg" fileData:fileData];
-    } Progress:^(NSProgress * _Nonnull progress) {
+    } progress:^(NSProgress * _Nonnull progress) {
         NSLog(@"*********progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
         if (progress.fractionCompleted == 1) {
             
@@ -253,11 +237,10 @@
 
 - (void)testCancelDownloadRequest {
     XCTestExpectation *ex = [self expectationWithDescription:@"test cancel download request"];
-    WFRequest *request = [WFNetworkManager sendRequest:^(WFRequest * _Nonnull request) {
-        request.requestType = Download;
-        request.url = @"http://i9.download.fd.pchome.net/g1/M00/09/0C/oYYBAFOzfi6IFsMOABKOGmYqrKQAABr-AKfW0YAEo4y231.jpg";
-        request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test1.png"];
-    } Progress:^(NSProgress * _Nonnull progress) {
+    WFRequest *request = [WFNetworkManager downloadRequest:^(WFRequest * _Nonnull request) {
+        request.url = @"http://cimg2.163.com/catchpic/1/1A/1AE6BA37579B21A3D3C40BB58643952C.jpg";
+        request.downloadCachePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/test2.png"];
+    } progress:^(NSProgress * _Nonnull progress) {
         NSLog(@"*********progress = %lld,%lld,%f",progress.totalUnitCount,progress.completedUnitCount,progress.fractionCompleted);
         if (progress.fractionCompleted == 1) {
             

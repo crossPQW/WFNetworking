@@ -129,7 +129,9 @@
 }
 
 - (WFRequest *)downloadWithRequest:(WFRequest *)request complete:(WFCompletedHandler)handler {
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:request.url] cachePolicy:0 timeoutInterval:request.timeoutInterval];
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:request.url]];
+    urlRequest.timeoutInterval = request.timeoutInterval;
     [self addHeaderForUrlRequest:urlRequest withRequest:request];
     
     BOOL isDirectory;
@@ -246,6 +248,7 @@
 }
 
 - (NSString *)getHTTPMethodWithRequest:(WFRequest *)request {
+    NSAssert(request.httpMethod >= 0, @"request http method illegal");
     NSArray * httpMethodArray = @[@"GET", @"POST", @"HEAD", @"PUT", @"DELETE", @"PATCH"];
     NSString *methodString = httpMethodArray[request.httpMethod];
     return methodString;

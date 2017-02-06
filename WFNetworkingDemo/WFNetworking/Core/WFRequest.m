@@ -18,6 +18,7 @@
         self.httpMethod = GET;
         self.timeoutInterval = 60;
         self.retryTime = 0;
+        self.callbackQueue = dispatch_get_main_queue();
     }
     return self;
 }
