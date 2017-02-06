@@ -18,102 +18,102 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - send request
 
 /**
- 发送 GET 请求
+ send GET request
 
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-- (WFRequest *)getRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)getRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
 
 /**
- 发送 POST 请求
+ send POST request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-- (WFRequest *)postRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)postRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 HEAD 请求
+ send HEAD request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-- (WFRequest *)headRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)headRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 PUT 请求
+ send PUT request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-- (WFRequest *)putRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)putRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 DELETE 请求
+ send DELETE request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-- (WFRequest *)deleteRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)deleteRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 PATCH 请求
+ send PATCH request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-- (WFRequest *)patchRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)patchRequest:(WFRequestConfigBlock)configBlock
                     success:(nullable WFSuccessBlock)successBlock
                     failure:(nullable WFFailureBlock)failureBlock;
 
 /**
- 发送 DOWNLOAD 请求
- 除 progressBlock 外其他回调均在 callBackQueue 中执行，progressBlock 会在 session queue 中执行
+ send DOWNLOAD request
+ @warning all call back will be called on callBackQueue of request except progressBlock, progressBlock will be called on session queue
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param progressBlock 下载进度 block
- @param successBlock 请求成功回调
- @param failureBlock 请求失败回调
- @param finishBlock 请求完成回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param progressBlock  download progress block, called on session block
+ @param successBlock Success call back for the request
+ @param failureBlock Failure call back for the request
+ @param finishBlock Finish call back for the download request
+ @return current request, can be used for cancel the request
  */
-- (WFRequest *)downloadRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)downloadRequest:(WFRequestConfigBlock)configBlock
                      progress:(nullable WFProgressBlock)progressBlock
                       success:(nullable WFSuccessBlock)successBlock
                       failure:(nullable WFFailureBlock)failureBlock
                        finish:(WFFinishBlock)finishBlock;
 
 /**
- 发送 UPLOAD 请求
- 除 progressBlock 外其他回调均在 callBackQueue 中执行，progressBlock 会在 session queue 中执行
+ send UPLOAD request
+ @warning all call back will be called on callBackQueue of request except progressBlock, progressBlock will be called on session queue
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param progressBlock 下载进度 block
- @param successBlock 请求成功回调
- @param failureBlock 请求失败回调
- @param finishBlock 请求完成回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param progressBlock  download progress block, called on session block
+ @param successBlock Success call back for the request
+ @param failureBlock Failure call back for the request
+ @param finishBlock Finish call back for the upload request
+ @return current request, can be used for cancel the request
  */
-- (WFRequest *)uploadRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)uploadRequest:(WFRequestConfigBlock)configBlock
                     progress:(nullable WFProgressBlock)progressBlock
                      success:(nullable WFSuccessBlock)successBlock
                      failure:(nullable WFFailureBlock)failureBlock
@@ -121,99 +121,99 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - class method
 /**
- 发送 GET 请求
+ send GET request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-+ (WFRequest *)getRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)getRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 POST 请求
+ send POST request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-+ (WFRequest *)postRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)postRequest:(WFRequestConfigBlock)configBlock
                    success:(nullable WFSuccessBlock)successBlock
                    failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 HEAD 请求
+ send HEAD request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-+ (WFRequest *)headRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)headRequest:(WFRequestConfigBlock)configBlock
                    success:(nullable WFSuccessBlock)successBlock
                    failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 PUT 请求
+ send PUT request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-+ (WFRequest *)putRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)putRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 DELETE 请求
+ send DELETE request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-+ (WFRequest *)deleteRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)deleteRequest:(WFRequestConfigBlock)configBlock
                      success:(nullable WFSuccessBlock)successBlock
                      failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 PATCH 请求
+ send PATCH request
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param successBlock  请求成功回调
- @param failureBlock 请求失败回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param successBlock  Success call back for the request
+ @param failureBlock Failure call back for the request
+ @return current request, can be used for cancel the request
  */
-+ (WFRequest *)patchRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)patchRequest:(WFRequestConfigBlock)configBlock
                     success:(nullable WFSuccessBlock)successBlock
                     failure:(nullable WFFailureBlock)failureBlock;
 /**
- 发送 DOWNLOAD 请求
- 除 progressBlock 外其他回调均在 callBackQueue 中执行，progressBlock 会在 session queue 中执行
+ send DOWNLOAD request
+ @warning all call back will be called on callBackQueue of request except progressBlock, progressBlock will be called on session queue
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param progressBlock 下载进度 block
- @param successBlock 请求成功回调
- @param failureBlock 请求失败回调
- @param finishBlock 请求完成回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param progressBlock  download progress block, called on session block
+ @param successBlock Success call back for the request
+ @param failureBlock Failure call back for the request
+ @param finishBlock Finish call back for the download request
+ @return current request, can be used for cancel the request
  */
-+ (WFRequest *)downloadRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)downloadRequest:(WFRequestConfigBlock)configBlock
                       progress:(nullable WFProgressBlock)progressBlock
                        success:(nullable WFSuccessBlock)successBlock
                        failure:(nullable WFFailureBlock)failureBlock
                         finish:(WFFinishBlock)finishBlock;
 /**
- 发送 UPLOAD 请求
- 除 progressBlock 外其他回调均在 callBackQueue 中执行，progressBlock 会在 session queue 中执行
+ send UPLOAD request
+ @warning all call back will be called on callBackQueue of request except progressBlock, progressBlock will be called on session queue
  
- @param requestBlock 用于配置请求信息的 block，具体参见 WFRequest
- @param progressBlock 下载进度 block
- @param successBlock 请求成功回调
- @param failureBlock 请求失败回调
- @param finishBlock 请求完成回调
- @return 返回当前request，用于以后取消请求
+ @param configBlock The config block to setup a new WFRequest object
+ @param progressBlock  download progress block, called on session block
+ @param successBlock Success call back for the request
+ @param failureBlock Failure call back for the request
+ @param finishBlock Finish call back for the upload request
+ @return current request, can be used for cancel the request
  */
-+ (WFRequest *)uploadRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)uploadRequest:(WFRequestConfigBlock)configBlock
                     progress:(nullable WFProgressBlock)progressBlock
                      success:(nullable WFSuccessBlock)successBlock
                      failure:(nullable WFFailureBlock)failureBlock
@@ -224,7 +224,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  cancel a request
 
- @param request a running request
+ @param request Request that need to be canceled
  */
 + (void)cancelRquest:(WFRequest *)request;
 

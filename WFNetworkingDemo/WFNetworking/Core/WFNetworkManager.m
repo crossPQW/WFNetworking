@@ -34,107 +34,107 @@
 }
 
 #pragma mark - ---------------public method-----------------
-- (WFRequest *)getRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)getRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequestWithRquestType:Normal httpMethod:GET configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequestWithRquestType:Normal httpMethod:GET configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-- (WFRequest *)postRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)postRequest:(WFRequestConfigBlock)configBlock
                    success:(nullable WFSuccessBlock)successBlock
                    failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequestWithRquestType:Normal httpMethod:POST configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequestWithRquestType:Normal httpMethod:POST configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-- (WFRequest *)headRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)headRequest:(WFRequestConfigBlock)configBlock
                    success:(nullable WFSuccessBlock)successBlock
                    failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequestWithRquestType:Normal httpMethod:HEAD configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequestWithRquestType:Normal httpMethod:HEAD configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-- (WFRequest *)putRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)putRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequestWithRquestType:Normal httpMethod:PUT configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequestWithRquestType:Normal httpMethod:PUT configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-- (WFRequest *)deleteRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)deleteRequest:(WFRequestConfigBlock)configBlock
                      success:(nullable WFSuccessBlock)successBlock
                      failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequestWithRquestType:Normal httpMethod:DELETE configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequestWithRquestType:Normal httpMethod:DELETE configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-- (WFRequest *)patchRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)patchRequest:(WFRequestConfigBlock)configBlock
                     success:(nullable WFSuccessBlock)successBlock
                     failure:(nullable WFFailureBlock)failureBlock {
-    return [self sendRequestWithRquestType:Normal httpMethod:PATCH configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequestWithRquestType:Normal httpMethod:PATCH configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-- (WFRequest *)downloadRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)downloadRequest:(WFRequestConfigBlock)configBlock
                       progress:(nullable WFProgressBlock)progressBlock
                        success:(nullable WFSuccessBlock)successBlock
                        failure:(nullable WFFailureBlock)failureBlock
                         finish:(WFFinishBlock)finishBlock {
-    return [self sendRequestWithRquestType:Download httpMethod:-1 configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequestWithRquestType:Download httpMethod:-1 configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-- (WFRequest *)uploadRequest:(WFRequestConfigBlock)requestBlock
+- (WFRequest *)uploadRequest:(WFRequestConfigBlock)configBlock
                     progress:(nullable WFProgressBlock)progressBlock
                      success:(nullable WFSuccessBlock)successBlock
                      failure:(nullable WFFailureBlock)failureBlock
                       finish:(WFFinishBlock)finishBlock {
-    return [self sendRequestWithRquestType:Upload httpMethod:-1 configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [self sendRequestWithRquestType:Upload httpMethod:-1 configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
 
-+ (WFRequest *)getRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)getRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:GET configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:GET configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-+ (WFRequest *)postRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)postRequest:(WFRequestConfigBlock)configBlock
                    success:(nullable WFSuccessBlock)successBlock
                    failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:POST configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:POST configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-+ (WFRequest *)headRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)headRequest:(WFRequestConfigBlock)configBlock
                    success:(nullable WFSuccessBlock)successBlock
                    failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:HEAD configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:HEAD configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-+ (WFRequest *)putRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)putRequest:(WFRequestConfigBlock)configBlock
                   success:(nullable WFSuccessBlock)successBlock
                   failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:PUT configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:PUT configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-+ (WFRequest *)deleteRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)deleteRequest:(WFRequestConfigBlock)configBlock
                      success:(nullable WFSuccessBlock)successBlock
                      failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:DELETE configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:DELETE configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-+ (WFRequest *)patchRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)patchRequest:(WFRequestConfigBlock)configBlock
                     success:(nullable WFSuccessBlock)successBlock
                     failure:(nullable WFFailureBlock)failureBlock {
-    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:PATCH configBlock:requestBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
+    return [[self defaultManager] sendRequestWithRquestType:Normal httpMethod:PATCH configBlock:configBlock Progress:nil success:successBlock failure:failureBlock finish:nil];
 }
-+ (WFRequest *)downloadRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)downloadRequest:(WFRequestConfigBlock)configBlock
                       progress:(nullable WFProgressBlock)progressBlock
                        success:(nullable WFSuccessBlock)successBlock
                        failure:(nullable WFFailureBlock)failureBlock
                         finish:(WFFinishBlock)finishBlock {
-    return [[self defaultManager] sendRequestWithRquestType:Download httpMethod:-1 configBlock:requestBlock Progress:progressBlock success:successBlock failure:failureBlock finish:finishBlock];
+    return [[self defaultManager] sendRequestWithRquestType:Download httpMethod:-1 configBlock:configBlock Progress:progressBlock success:successBlock failure:failureBlock finish:finishBlock];
 }
-+ (WFRequest *)uploadRequest:(WFRequestConfigBlock)requestBlock
++ (WFRequest *)uploadRequest:(WFRequestConfigBlock)configBlock
                     progress:(nullable WFProgressBlock)progressBlock
                      success:(nullable WFSuccessBlock)successBlock
                      failure:(nullable WFFailureBlock)failureBlock
                       finish:(WFFinishBlock)finishBlock {
-    return [[self defaultManager] sendRequestWithRquestType:Upload httpMethod:-1 configBlock:requestBlock Progress:progressBlock success:successBlock failure:failureBlock finish:finishBlock];
+    return [[self defaultManager] sendRequestWithRquestType:Upload httpMethod:-1 configBlock:configBlock Progress:progressBlock success:successBlock failure:failureBlock finish:finishBlock];
 }
 #pragma mark - send request
 
 - (WFRequest *)sendRequestWithRquestType:(WFRequestType)requestType
                               httpMethod:(WFHTTPMethod)httpMethod
-                             configBlock:(WFRequestConfigBlock)requestBlock
+                             configBlock:(WFRequestConfigBlock)configBlock
                                 Progress:(WFProgressBlock)progressBlock
                                  success:(WFSuccessBlock)successBlock
                                  failure:(WFFailureBlock)failureBlock
                                   finish:(WFFinishBlock)finishBlock {
     WFRequest *request = [[WFRequest alloc] init];
-    if (requestBlock) {
-        requestBlock(request);
+    if (configBlock) {
+        configBlock(request);
     }
     request.requestType = requestType;
     request.httpMethod = httpMethod;
