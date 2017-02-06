@@ -19,9 +19,28 @@ typedef void(^WFCompletedHandler)(id _Nullable response, NSError *error);
 
 + (instancetype)shareAgent;
 
+
+/**
+ send a http request
+
+ @param request http request
+ @param handler complete call back
+ @return  current request
+ */
 - (WFRequest *)sendRequest:(WFRequest *)request complete:(WFCompletedHandler)handler;
 
+
+/**
+ cancel a request
+ 
+ @param request Request that need to be canceled
+ */
 - (void)cancelRequest:(WFRequest *)request;
+
+
+/**
+ cancel all running request
+ */
 - (void)cancelAllRequest;
 @end
 
