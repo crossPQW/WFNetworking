@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FCD5B54C78AD84DA33B2797 /* libPods-WFNetworkingDemoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9EAF160693D8EE18F8B9D5 /* libPods-WFNetworkingDemoUITests.a */; };
 		385821841E264B1000A50E1B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 385821831E264B1000A50E1B /* main.m */; };
 		385821871E264B1000A50E1B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 385821861E264B1000A50E1B /* AppDelegate.m */; };
 		3858218A1E264B1000A50E1B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 385821891E264B1000A50E1B /* ViewController.m */; };
@@ -18,17 +19,13 @@
 		386CE10B1E2CCF570030FFF9 /* WFTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 386CE10A1E2CCF570030FFF9 /* WFTestCase.m */; };
 		386CE10D1E2CCF690030FFF9 /* WFNormalTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 386CE10C1E2CCF690030FFF9 /* WFNormalTestCase.m */; };
 		38701E571E31F47400399E63 /* 5784519b580b4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 38701E561E31F47400399E63 /* 5784519b580b4.jpg */; };
-		38720DAA1E49819F004B6B63 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38720D991E49819F004B6B63 /* AFHTTPSessionManager.m */; };
-		38720DAB1E49819F004B6B63 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38720D9C1E49819F004B6B63 /* AFNetworkReachabilityManager.m */; };
-		38720DAC1E49819F004B6B63 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 38720D9E1E49819F004B6B63 /* AFSecurityPolicy.m */; };
-		38720DAD1E49819F004B6B63 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 38720DA01E49819F004B6B63 /* AFURLRequestSerialization.m */; };
-		38720DAE1E49819F004B6B63 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 38720DA21E49819F004B6B63 /* AFURLResponseSerialization.m */; };
-		38720DAF1E49819F004B6B63 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38720DA41E49819F004B6B63 /* AFURLSessionManager.m */; };
 		38DC4A0A1FD683C600DE15EF /* WFNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4A001FD683C500DE15EF /* WFNetworkConfig.m */; };
 		38DC4A0B1FD683C600DE15EF /* WFNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4A011FD683C500DE15EF /* WFNetworkManager.m */; };
 		38DC4A0C1FD683C600DE15EF /* WFNetWorkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4A041FD683C600DE15EF /* WFNetWorkAgent.m */; };
 		38DC4A0D1FD683C600DE15EF /* WFRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4A051FD683C600DE15EF /* WFRequest.m */; };
 		38DC4A0E1FD683C600DE15EF /* WFUploadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4A091FD683C600DE15EF /* WFUploadData.m */; };
+		828EDD83E44E59C04FE98C76 /* libPods-WFNetworkingDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF2CC612A4B34104586C1CF /* libPods-WFNetworkingDemo.a */; };
+		FE4BD89B232F085E99025639 /* libPods-WFNetworkingDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC0A846580B8B499077DD144 /* libPods-WFNetworkingDemoTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,19 +66,6 @@
 		386CE10A1E2CCF570030FFF9 /* WFTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFTestCase.m; sourceTree = "<group>"; };
 		386CE10C1E2CCF690030FFF9 /* WFNormalTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFNormalTestCase.m; sourceTree = "<group>"; };
 		38701E561E31F47400399E63 /* 5784519b580b4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5784519b580b4.jpg; sourceTree = "<group>"; };
-		38720D981E49819F004B6B63 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
-		38720D991E49819F004B6B63 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
-		38720D9A1E49819F004B6B63 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		38720D9B1E49819F004B6B63 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		38720D9C1E49819F004B6B63 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		38720D9D1E49819F004B6B63 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
-		38720D9E1E49819F004B6B63 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
-		38720D9F1E49819F004B6B63 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		38720DA01E49819F004B6B63 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
-		38720DA11E49819F004B6B63 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
-		38720DA21E49819F004B6B63 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		38720DA31E49819F004B6B63 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
-		38720DA41E49819F004B6B63 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		38720DA51E49819F004B6B63 /* WFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFNetworking.h; sourceTree = "<group>"; };
 		38DC49FF1FD683C500DE15EF /* WFMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFMacro.h; sourceTree = "<group>"; };
 		38DC4A001FD683C500DE15EF /* WFNetworkConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFNetworkConfig.m; sourceTree = "<group>"; };
@@ -94,6 +78,15 @@
 		38DC4A071FD683C600DE15EF /* WFNetworkConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFNetworkConfig.h; sourceTree = "<group>"; };
 		38DC4A081FD683C600DE15EF /* WFNetWorkAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFNetWorkAgent.h; sourceTree = "<group>"; };
 		38DC4A091FD683C600DE15EF /* WFUploadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFUploadData.m; sourceTree = "<group>"; };
+		41353E80A23FC545A4762E77 /* Pods-WFNetworkingDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WFNetworkingDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WFNetworkingDemo/Pods-WFNetworkingDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		874F16616CED25EFD81FECF9 /* Pods-WFNetworkingDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WFNetworkingDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WFNetworkingDemoTests/Pods-WFNetworkingDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		885C47021FA70065B060058B /* Pods-WFNetworkingDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WFNetworkingDemoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WFNetworkingDemoUITests/Pods-WFNetworkingDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		9A2471E0E9C30BEBD0038D8B /* Pods-WFNetworkingDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WFNetworkingDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WFNetworkingDemoTests/Pods-WFNetworkingDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		AC0A846580B8B499077DD144 /* libPods-WFNetworkingDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WFNetworkingDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD9EAF160693D8EE18F8B9D5 /* libPods-WFNetworkingDemoUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WFNetworkingDemoUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D53BE6A0E85AAA7545304A70 /* Pods-WFNetworkingDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WFNetworkingDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WFNetworkingDemo/Pods-WFNetworkingDemo.release.xcconfig"; sourceTree = "<group>"; };
+		DCF2CC612A4B34104586C1CF /* libPods-WFNetworkingDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WFNetworkingDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE1B2D3647110B79F5954840 /* Pods-WFNetworkingDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WFNetworkingDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WFNetworkingDemoUITests/Pods-WFNetworkingDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				828EDD83E44E59C04FE98C76 /* libPods-WFNetworkingDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE4BD89B232F085E99025639 /* libPods-WFNetworkingDemoTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,21 +110,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FCD5B54C78AD84DA33B2797 /* libPods-WFNetworkingDemoUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11A50B2F2BF998BAFD000AB9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				41353E80A23FC545A4762E77 /* Pods-WFNetworkingDemo.debug.xcconfig */,
+				D53BE6A0E85AAA7545304A70 /* Pods-WFNetworkingDemo.release.xcconfig */,
+				874F16616CED25EFD81FECF9 /* Pods-WFNetworkingDemoTests.debug.xcconfig */,
+				9A2471E0E9C30BEBD0038D8B /* Pods-WFNetworkingDemoTests.release.xcconfig */,
+				EE1B2D3647110B79F5954840 /* Pods-WFNetworkingDemoUITests.debug.xcconfig */,
+				885C47021FA70065B060058B /* Pods-WFNetworkingDemoUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		385821761E264B1000A50E1B = {
 			isa = PBXGroup;
 			children = (
 				38720D8B1E49819F004B6B63 /* WFNetworking */,
-				38720D961E49819F004B6B63 /* Lib */,
 				385821811E264B1000A50E1B /* WFNetworkingDemo */,
 				3858219B1E264B1000A50E1B /* WFNetworkingDemoTests */,
 				385821A61E264B1000A50E1B /* WFNetworkingDemoUITests */,
 				385821801E264B1000A50E1B /* Products */,
+				11A50B2F2BF998BAFD000AB9 /* Pods */,
+				3E514F852AABDEE8B5A5565E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,32 +226,14 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		38720D961E49819F004B6B63 /* Lib */ = {
+		3E514F852AABDEE8B5A5565E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				38720D971E49819F004B6B63 /* AFNetworking */,
+				DCF2CC612A4B34104586C1CF /* libPods-WFNetworkingDemo.a */,
+				AC0A846580B8B499077DD144 /* libPods-WFNetworkingDemoTests.a */,
+				CD9EAF160693D8EE18F8B9D5 /* libPods-WFNetworkingDemoUITests.a */,
 			);
-			path = Lib;
-			sourceTree = "<group>";
-		};
-		38720D971E49819F004B6B63 /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				38720D981E49819F004B6B63 /* AFHTTPSessionManager.h */,
-				38720D991E49819F004B6B63 /* AFHTTPSessionManager.m */,
-				38720D9A1E49819F004B6B63 /* AFNetworking.h */,
-				38720D9B1E49819F004B6B63 /* AFNetworkReachabilityManager.h */,
-				38720D9C1E49819F004B6B63 /* AFNetworkReachabilityManager.m */,
-				38720D9D1E49819F004B6B63 /* AFSecurityPolicy.h */,
-				38720D9E1E49819F004B6B63 /* AFSecurityPolicy.m */,
-				38720D9F1E49819F004B6B63 /* AFURLRequestSerialization.h */,
-				38720DA01E49819F004B6B63 /* AFURLRequestSerialization.m */,
-				38720DA11E49819F004B6B63 /* AFURLResponseSerialization.h */,
-				38720DA21E49819F004B6B63 /* AFURLResponseSerialization.m */,
-				38720DA31E49819F004B6B63 /* AFURLSessionManager.h */,
-				38720DA41E49819F004B6B63 /* AFURLSessionManager.m */,
-			);
-			path = AFNetworking;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,9 +243,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 385821AC1E264B1000A50E1B /* Build configuration list for PBXNativeTarget "WFNetworkingDemo" */;
 			buildPhases = (
+				D270953A170745C59180292A /* [CP] Check Pods Manifest.lock */,
 				3858217B1E264B1000A50E1B /* Sources */,
 				3858217C1E264B1000A50E1B /* Frameworks */,
 				3858217D1E264B1000A50E1B /* Resources */,
+				035359B2DE6F10E0218FA387 /* [CP] Embed Pods Frameworks */,
+				9EECE456B447011C4E6C40CB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -268,9 +263,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 385821AF1E264B1000A50E1B /* Build configuration list for PBXNativeTarget "WFNetworkingDemoTests" */;
 			buildPhases = (
+				D90FF217E3F4B9B802F72F32 /* [CP] Check Pods Manifest.lock */,
 				385821941E264B1000A50E1B /* Sources */,
 				385821951E264B1000A50E1B /* Frameworks */,
 				385821961E264B1000A50E1B /* Resources */,
+				27B091D447E1523AF9649322 /* [CP] Embed Pods Frameworks */,
+				CC904C57DBE6A59556CC7F03 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -286,9 +284,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 385821B21E264B1000A50E1B /* Build configuration list for PBXNativeTarget "WFNetworkingDemoUITests" */;
 			buildPhases = (
+				83CE7B60C1566A6538EEFA42 /* [CP] Check Pods Manifest.lock */,
 				3858219F1E264B1000A50E1B /* Sources */,
 				385821A01E264B1000A50E1B /* Frameworks */,
 				385821A11E264B1000A50E1B /* Resources */,
+				DE8C84B953F38D3092F47F54 /* [CP] Embed Pods Frameworks */,
+				D7E4F1181DDB2B223D9AACA9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -376,6 +377,144 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		035359B2DE6F10E0218FA387 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WFNetworkingDemo/Pods-WFNetworkingDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		27B091D447E1523AF9649322 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WFNetworkingDemoTests/Pods-WFNetworkingDemoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		83CE7B60C1566A6538EEFA42 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9EECE456B447011C4E6C40CB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WFNetworkingDemo/Pods-WFNetworkingDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC904C57DBE6A59556CC7F03 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WFNetworkingDemoTests/Pods-WFNetworkingDemoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D270953A170745C59180292A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D7E4F1181DDB2B223D9AACA9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WFNetworkingDemoUITests/Pods-WFNetworkingDemoUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D90FF217E3F4B9B802F72F32 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DE8C84B953F38D3092F47F54 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WFNetworkingDemoUITests/Pods-WFNetworkingDemoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3858217B1E264B1000A50E1B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -383,14 +522,8 @@
 			files = (
 				3858218A1E264B1000A50E1B /* ViewController.m in Sources */,
 				38DC4A0E1FD683C600DE15EF /* WFUploadData.m in Sources */,
-				38720DAB1E49819F004B6B63 /* AFNetworkReachabilityManager.m in Sources */,
-				38720DAC1E49819F004B6B63 /* AFSecurityPolicy.m in Sources */,
-				38720DAD1E49819F004B6B63 /* AFURLRequestSerialization.m in Sources */,
 				385821871E264B1000A50E1B /* AppDelegate.m in Sources */,
 				385821841E264B1000A50E1B /* main.m in Sources */,
-				38720DAE1E49819F004B6B63 /* AFURLResponseSerialization.m in Sources */,
-				38720DAF1E49819F004B6B63 /* AFURLSessionManager.m in Sources */,
-				38720DAA1E49819F004B6B63 /* AFHTTPSessionManager.m in Sources */,
 				38DC4A0C1FD683C600DE15EF /* WFNetWorkAgent.m in Sources */,
 				38DC4A0A1FD683C600DE15EF /* WFNetworkConfig.m in Sources */,
 				38DC4A0D1FD683C600DE15EF /* WFRequest.m in Sources */,
@@ -555,6 +688,7 @@
 		};
 		385821AD1E264B1000A50E1B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41353E80A23FC545A4762E77 /* Pods-WFNetworkingDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HE3M4LJKL5;
@@ -567,6 +701,7 @@
 		};
 		385821AE1E264B1000A50E1B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D53BE6A0E85AAA7545304A70 /* Pods-WFNetworkingDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HE3M4LJKL5;
@@ -579,6 +714,7 @@
 		};
 		385821B01E264B1000A50E1B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 874F16616CED25EFD81FECF9 /* Pods-WFNetworkingDemoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = HE3M4LJKL5;
@@ -592,6 +728,7 @@
 		};
 		385821B11E264B1000A50E1B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A2471E0E9C30BEBD0038D8B /* Pods-WFNetworkingDemoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = HE3M4LJKL5;
@@ -605,6 +742,7 @@
 		};
 		385821B31E264B1000A50E1B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE1B2D3647110B79F5954840 /* Pods-WFNetworkingDemoUITests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = HE3M4LJKL5;
 				INFOPLIST_FILE = WFNetworkingDemoUITests/Info.plist;
@@ -617,6 +755,7 @@
 		};
 		385821B41E264B1000A50E1B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 885C47021FA70065B060058B /* Pods-WFNetworkingDemoUITests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = HE3M4LJKL5;
 				INFOPLIST_FILE = WFNetworkingDemoUITests/Info.plist;
