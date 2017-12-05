@@ -125,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				38720D8B1E49819F004B6B63 /* WFNetworking */,
+				38720D961E49819F004B6B63 /* Lib */,
 				385821811E264B1000A50E1B /* WFNetworkingDemo */,
 				3858219B1E264B1000A50E1B /* WFNetworkingDemoTests */,
 				385821A61E264B1000A50E1B /* WFNetworkingDemoUITests */,
@@ -192,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				38720D8C1E49819F004B6B63 /* Core */,
-				38720D961E49819F004B6B63 /* Lib */,
 				38720DA51E49819F004B6B63 /* WFNetworking.h */,
 			);
 			path = WFNetworking;
