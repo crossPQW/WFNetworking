@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #echo "2.3" > .swift-version
 
   s.name         = "WFNetWorking"
-  s.version      = "1.0"
+  s.version      = "1.0.1"
   s.summary      = "WFNetworking is a lightweight network library base on AFNetworking"
 
   s.homepage     = "https://github.com/crossPQW/WFNetworking"
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.author             = { "Shaohua Huang" => "651024752@qq.com" }
   s.platform     = :ios, "7.0"
 
-  s.source       = { :git => "https://github.com/crossPQW/WFNetworking.git", :tag => "1.0" }
+  s.source       = { :git => "https://github.com/crossPQW/WFNetworking.git", :tag => "1.0.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -36,7 +36,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "WFNetworking", "WFNetworking/**/*.{h,m}"
+  s.source_files  = "WFNetworking", "WFNetworkingDemo/WFNetworking/**/*.{h,m}"
 
   s.dependency "AFNetworking"
 
