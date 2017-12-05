@@ -10,6 +10,14 @@
 #import "WFRequest.h"
 #import "WFNetWorkAgent.h"
 
+#ifdef DEBUG
+#import <UIKit/UIKit.h>
+#else
+#endif
+@interface WFNetworkManager()
+
+@property (nonatomic, strong) WFNetworkConfig *config;
+@end
 @implementation WFNetworkManager
 
 #pragma mark - life cycle
@@ -31,6 +39,18 @@
         manager = [self manager];
     });
     return manager;
+}
+
++ (void)setupConfig:(void(^)(WFNetworkConfig *config))configBlock {
+    [[self defaultManager] setupConfig:configBlock];
+}
+
+- (void)setupConfig:(void(^)(WFNetworkConfig *config))configBlock {
+    WFNetworkConfig *config = [[WFNetworkConfig alloc] init];
+    if (configBlock) {
+        configBlock(config);
+    }
+    self.config = config;
 }
 
 #pragma mark - ---------------public method-----------------
@@ -178,9 +198,28 @@
         [request setValue:progressBlock forKey:@"_progressBlock"];
     }
     
+    if (self.config.generalHeaders) {
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:request.headers];
+        [dict addEntriesFromDictionary:self.config.generalHeaders];
+        request.headers = dict.copy;
+    }
+    
+    if (self.config.generalParameters) {
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:request.parameters];
+        [dict addEntriesFromDictionary:self.config.generalParameters];
+        request.parameters = dict.copy;
+    }
+    
+    if (self.config.generalTimeout) {
+        request.timeoutInterval = self.config.generalTimeout;
+    }
+    
     if (request.url.length == 0) {
         if (request.host.length == 0) {
-            request.host = defaultHost;
+            if (self.config.generalHost.length > 0) {
+                request.host = self.config.generalHost;
+            }
+            NSAssert(request.host.length > 0, @" request host can't be null.");
         }
         if (request.api.length > 0) {
             NSURL *baseUrl = [NSURL URLWithString:request.host];
@@ -213,6 +252,17 @@
         });
         return;
     }else{
+#ifdef DEBUG
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIViewController *vc = [UIApplication sharedApplication].delegate.window.rootViewController;
+            NSString *message = [NSString stringWithFormat:@"Request:\n %@ \n Error:\n %@",request.description,error.localizedDescription];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"请求出错(该弹窗只会在测试环境出现)" message:message preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+            [alert addAction:action];
+            [vc presentViewController:alert animated:YES completion:nil];
+        });
+#else
+#endif
         if (request.callbackQueue) {
             dispatch_async(request.callbackQueue, ^{
                 if (request.failureBlock) {
@@ -250,13 +300,17 @@
 }
 
 - (void)performSuccessCallBackWithResponseobject:(id)responseObject Request:(WFRequest *)request {
-    if (request.successBlock) {
-        request.successBlock(responseObject);
-    }
-    if (request.finishBlock) {
-        request.finishBlock(responseObject,nil);
-    }
     
-    [request clearCallBack];
+    if ([responseObject isKindOfClass:[NSDictionary class]]) {
+        
+        if (request.successBlock) {
+            request.successBlock(responseObject);
+        }
+        if (request.finishBlock) {
+            request.finishBlock(responseObject,nil);
+        }
+        
+        [request clearCallBack];
+    }
 }
 @end

@@ -8,6 +8,7 @@
 
 
 #import "WFNetWorkAgent.h"
+#import "AFNetworking.h"
 #import "WFMacro.h"
 #import <pthread/pthread.h>
 #import <objc/runtime.h>
@@ -105,7 +106,6 @@
         if (error && handler) {
             handler(nil, error);
         }
-        
         if ([responseObject isKindOfClass:[NSData class]]) {
             NSError *serializationError;
             responseObject = [self.afJSONResponseSerializer responseObjectForResponse:response data:responseObject error:&serializationError];
@@ -271,6 +271,7 @@
     if (!_sessionManager) {
         _sessionManager = [AFHTTPSessionManager manager];
         _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        _sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/plain", @"text/html",nil];
         _sessionManager.completionQueue = self.requestCompleteQueue;
         _sessionManager.operationQueue.maxConcurrentOperationCount = 5;
     }
@@ -287,6 +288,8 @@
 - (AFJSONResponseSerializer *)afJSONResponseSerializer {
     if (!_afJSONResponseSerializer) {
         _afJSONResponseSerializer = [AFJSONResponseSerializer serializer];
+//        _afJSONResponseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//        _afJSONResponseSerializer.readingOptions = NSJSONReadingAllowFragments;
     }
     return _afJSONResponseSerializer;
 }

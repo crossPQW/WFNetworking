@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WFMacro.h"
+#import "WFNetworkConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype) defaultManager;
 
++ (void)setupConfig:(void(^)(WFNetworkConfig *config))configBlock;
 #pragma mark - send request
 
 /**

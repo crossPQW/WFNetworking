@@ -30,7 +30,6 @@ typedef NS_ENUM(NSInteger, WFHTTPMethod) {
     PATCH
 };
 
-static NSString *const defaultHost = @"https://httpbin.org/";
 
 #pragma mark - callBackBlock
 typedef void (^WFRequestConfigBlock)(WFRequest *request);

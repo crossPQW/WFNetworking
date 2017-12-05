@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "WFRequest.h"
 
-#import "AFHTTPSessionManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
