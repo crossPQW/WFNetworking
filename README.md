@@ -10,25 +10,24 @@ WFNetworking is a lightweight network library base on AFNetworking
 ## 使用
 你可以在项目初始化的时候设置网络请求通用配置：
 设置了通用请求后，如果在后续的请求中没有设置 host、请求头、参数、超时时间，那么会自动使用通用配置。
-```
+
+```swift
 [WFNetworkManager setupConfig:^(WFNetworkConfig * _Nonnull config) {
-        config.generalHost = @"https://httpbin.org/";
-        config.generalHeaders = @{@"key" : @"value"};
-        config.generalParameters = @{@"key" : @"value"};
-        config.generalTimeout = 30;
-    }];
+       config.generalHost = @"https://httpbin.org/";
+       config.generalHeaders = @{@"key" : @"value"};
+       config.generalParameters = @{@"key" : @"value"};
+       config.generalTimeout = 30;
+ }];
 ```
 发起`GET`请求
-```
-    [WFNetworkManager getRequest:^(WFRequest * _Nonnull request) {
-      //config your request
+```swift
+[WFNetworkManager getRequest:^(WFRequest * _Nonnull request) {
         request.api = @"get";
     } success:^(id  _Nullable response) {
-
+        
     } failure:^(NSError * _Nullable error) {
-
+        
     }];
-
 ```
 发起`POST`请求
 ```
